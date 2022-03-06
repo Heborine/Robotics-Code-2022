@@ -1,98 +1,135 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+//define control scheme -- arcade vs. tank
+
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.cameraserver.*;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.XboxController;
+import java.lang.System;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
-/**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
- * project.
- */
+import frc.robot.subsystems.ArcadeDrivetrain;
+import frc.robot.subsystems.AutonomousLimelight;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Intake;
+
+
 public class Robot extends TimedRobot {
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+    public static ArcadeDrivetrain drivetrain;
+    public static Shooter shooter;
+    public static Climber climber;
+    public static AutonomousLimelight limelight;
+    public static Intake intake;
+    public static double leftStickVal;
+    public static double rightStickVal;
 
-  /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
-   */
-  @Override
-  public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
-  }
+    public static XboxController XboxController0;
+    public static XboxController XboxController1;
 
-  /**
-   * This function is called every robot packet, no matter the mode. Use this for items like
-   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
-   *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
-   * SmartDashboard integrated updating.
-   */
-  @Override
-  public void robotPeriodic() {}
+    @Override
+    public void robotInit() {
+        drivetrain = new ArcadeDrivetrain();
+        shooter = new Shooter();
+        climber = new Climber();
+        limelight = new AutonomousLimelight();
+        intake = new Intake();
 
-  /**
-   * This autonomous (along with the chooser code above) shows how to select between different
-   * autonomous modes using the dashboard. The sendable chooser code works with the Java
-   * SmartDashboard. If you prefer the LabVIEW Dashboard, remove all of the chooser code and
-   * uncomment the getString line to get the auto name from the text box below the Gyro
-   *
-   * <p>You can add additional auto modes by adding additional comparisons to the switch structure
-   * below with additional strings. If using the SendableChooser make sure to add them to the
-   * chooser code above as well.
-   */
-  @Override
-  public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
-  }
-
-  /** This function is called periodically during autonomous. */
-  @Override
-  public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
+        XboxController0 = new XboxController(RobotMap.XboxController0);
+        XboxController1 = new XboxController(RobotMap.XboxController1);
     }
-  }
 
-  /** This function is called once when teleop is enabled. */
-  @Override
-  public void teleopInit() {}
+    @Override
+    public void autonomousPeriodic() {
+        limelight.autoPeriodic();
+        drivetrain.driveRoute();
+        shooter.Firing();
+        Timer.delay(5);
+        shooter.StopFiring();
+    }
 
-  /** This function is called periodically during operator control. */
-  @Override
-  public void teleopPeriodic() {}
+    @Override
+    public void teleopPeriodic() {
+        //if the start button is pressed, set the controls to tank drive - else, use arcadedrive - control swap
+        if(XboxController0.getStartButtonPressed()){
+            double y_axis_left = (XboxController0.getY(Hand.kLeft) * RobotMap.drivetrainPower);
+            double y_axis_right = (XboxController0.getY(Hand.kRight) * RobotMap.drivetrainPower);
+            if(XboxController0.getBButtonPressed()){
+                drivetrain.drivetrain.tankDrive(0, 0);
+            }
+            else{
+                while(XboxController0.getXButtonPressed()){
+                    //reverse controls
+                    drivetrain.drivetrain.tankDrive((-1 * y_axis_left), (-1 * y_axis_right));
+                }
+                drivetrain.drivetrain.tankDrive(y_axis_left, y_axis_right);
+            }
+        } else {
+            //full stop
+            if(XboxController0.getBButtonPressed()){
+                drivetrain.drivetrain.arcadeDrive(0, 0);
+            }
+            
+            //turn differently (not moving forward or backward) when left stick pressed
+            else if(XboxController0.getStickButtonPressed(Hand.kLeft)){
+                drivetrain.drivetrain.arcadeDrive(0, x_axis);
+            }
+            //get controller left stick x and y to set speed and rotation
+            else{
+                while(XboxController0.getXButtonPressed()){
+                    drivetrain.drivetrain.arcadeDrive((-1 * y_axis), x_axis);
+                }
+                drivetrain.drivetrain.arcadeDrive(y_axis, x_axis);
+            }
+        }
+        //set shooters to right back trigger
+        shooter.topMotor.set(XboxController0.getTriggerAxis(Hand.kRight) * RobotMap.shooterPower);
+        shooter.bottomMotor.set(XboxController0.getTriggerAxis(Hand.kRight) * RobotMap.shooterPower);
 
-  /** This function is called once when the robot is disabled. */
-  @Override
-  public void disabledInit() {}
+        while (XboxController0.getBumperPressed(Hand.kRight)) {
+            intake.intakeExtender.set(-1 * RobotMap.rollerExtendPower);
+        }
 
-  /** This function is called periodically when disabled. */
-  @Override
-  public void disabledPeriodic() {}
+        while (XboxController0.getBumperPressed(Hand.kLeft)){
+            intake.intakeExtender.set(1 * RobotMap.rollerExtendPower);
+        }
 
-  /** This function is called once when test mode is enabled. */
-  @Override
-  public void testInit() {}
+        while (XboxController0.getBumperReleased(Hand.kRight) & XboxController0.getBumperReleased(Hand.kLeft)) {
+        intake.intakeExtender.set(0.0);
+        }
 
-  /** This function is called periodically during test mode. */
-  @Override
-  public void testPeriodic() {}
+        intake.intakeRoller.set(XboxController0.getTriggerAxis(Hand.kLeft) * RobotMap.intakeSpeed);
+
+        while(XboxController0.getAButtonPressed()){
+            climber.climberMotor.raiseClimber();
+        }
+        while(XboxController0.getYButtonPressed()){
+            climber.climberMotor.lowerClimber();
+        }
+        //smoother movement and more adjustable
+        //edit for arcade drive with power
+        /*
+        if(XboxController0.getX(Hand.kLeft) < 0){
+            double x_axis = Math.pow(XboxController0.getX(Hand.kLeft), 2) * RobotMap.drivetrainPower * -1;
+        }
+        else{
+            double x_axis = Math.pow(XboxController0.getX(Hand.kLeft), 2) * RobotMap.drivetrainPower;
+        }
+        if(XboxController0.getY(Hand.kLeft) < 0){
+            double y_axis = Math.pow(XboxController0.getY(Hand.kLeft), 2) * RobotMap.drivetrainPower * -1;
+        }
+        else{
+            double y_axis = Math.pow(XboxController0.getY(Hand.kLeft), 2) * RobotMap.drivetrainPower;
+        }*/
+        }
+    }
 }
