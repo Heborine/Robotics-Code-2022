@@ -7,11 +7,13 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.command.Subsystem;
+//import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class Shooter extends Subsystem {
+public class Shooter extends Robot implements Subsystem {
   public Spark topMotor;
   public Spark bottomMotor;
 
@@ -36,36 +38,36 @@ public class Shooter extends Subsystem {
     shooter.bottomMotor.set(0);
   }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of 29a9c82 (more info)
-=======
->>>>>>> parent of 29a9c82 (more info)
+// <<<<<<< HEAD
+// <<<<<<< HEAD
+// <<<<<<< HEAD
+// <<<<<<< HEAD
+// =======
+// =======
+// >>>>>>> parent of 29a9c82 (more info)
+// =======
+// >>>>>>> parent of 29a9c82 (more info)
   // useful info: https://docs.limelightvision.io/en/latest/cs_autorange.html
-  public void Checker(){
-    @Override
-    public void ShooterDistanceRender() {
-          Update_Limelight_Tracking();
-=======
+  // public void Checker(){
+  //   @Override
+  //   public void ShooterDistanceRender() {
+  //         Update_Limelight_Tracking();
+// =======
   // useful info: https://docs.limelightvision.io/en/latest/cs_autorange.html
   //public void Checker(){
   //  @Override
   //  public void ShooterDistanceRender() {
    //       Update_Limelight_Tracking();
->>>>>>> parent of 29a9c82 (more info)
+// >>>>>>> parent of 29a9c82 (more info)
 
-        if (m_LimelightHasValidTarget){
+//         if (m_LimelightHasValidTarget){
 
-      }
-        else{
+//       }
+//         else{
 
-<<<<<<< HEAD
-      }
-=======
+// // <<<<<<< HEAD
+//       }
+// =======
     //  }
 /*
     public void Update_Limelight_Tracking_Shooter()
@@ -99,19 +101,19 @@ public class Shooter extends Subsystem {
             drive_cmd = MAX_DRIVE;
           }
           m_LimelightDriveCommand = drive_cmd;
-        */}
+        // */}
 
->>>>>>> parent of 29a9c82 (more info)
+// >>>>>>> parent of 29a9c82 (more info)
 
           
-    }
+//     }
 
-  }
+//   }
 
->>>>>>> parent of 29a9c82 (more info)
-  @Override
-  public void initDefaultCommand() {
-  }
+// >>>>>>> parent of 29a9c82 (more info)
+  // @Override
+  // public void initDefaultCommand() {
+  // }
 
   
 }

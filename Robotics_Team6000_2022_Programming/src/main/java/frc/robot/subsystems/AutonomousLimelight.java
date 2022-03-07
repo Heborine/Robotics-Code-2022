@@ -8,12 +8,15 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
+//import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 //import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.command.Subsystem;
+//import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.networktables.*;
 
 /**
@@ -23,7 +26,7 @@ import edu.wpi.first.networktables.*;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class AutonomousLimelight extends Subsystem {
+public class AutonomousLimelight extends Robot implements Subsystem  {
 
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
@@ -93,7 +96,7 @@ public class AutonomousLimelight extends Subsystem {
   /**
    * This function is called periodically during operator control.
    */
-  @Override
+  //@Override
   public void autoPeriodic() {
         Update_Limelight_Tracking();
 

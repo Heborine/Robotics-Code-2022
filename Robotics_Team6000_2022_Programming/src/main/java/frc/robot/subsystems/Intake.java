@@ -7,12 +7,13 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.command.Subsystem;
+//import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.Timer;
 
-public class Intake extends Subsystem {
+public class Intake implements Subsystem {
     public Spark intakeRoller;
     public Spark intakeExtender;
 
@@ -29,7 +30,7 @@ public class Intake extends Subsystem {
         intakeExtender.set(0.0);
     }
 
-    @Override
-    public void initDefaultCommand() {
-    }
+    // @Override
+    // public void initDefaultCommand() {
+    // }
 }

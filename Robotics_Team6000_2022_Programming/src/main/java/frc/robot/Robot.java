@@ -4,10 +4,10 @@
 package frc.robot;
 
 
-import edu.wpi.first.wpilibj.Spark;
+//import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.command.Scheduler;
+//import edu.wpi.first.wpilibj.GenericHID.Hand;
+//import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.cameraserver.*;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -61,9 +61,11 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         //if the start button is pressed, set the controls to tank drive - else, use arcadedrive - control swap
+        //double x_axis = XboxController0.getLeftX();
+        //double y_axis = XboxController0.getLeftY();
         if(XboxController0.getStartButtonPressed()){
-            double y_axis_left = (XboxController0.getY(Hand.kLeft) * RobotMap.drivetrainPower);
-            double y_axis_right = (XboxController0.getY(Hand.kRight) * RobotMap.drivetrainPower);
+            double y_axis_left = (XboxController0.getLeftY() * RobotMap.drivetrainPower);
+            double y_axis_right = (XboxController0.getRightY() * RobotMap.drivetrainPower);
             if(XboxController0.getBButtonPressed()){
                 drivetrain.drivetrain.tankDrive(0, 0);
             }
@@ -74,14 +76,15 @@ public class Robot extends TimedRobot {
                 }
                 drivetrain.drivetrain.tankDrive(y_axis_left, y_axis_right);
             }
-        } else {
+        } 
+        else {
             //full stop
             if(XboxController0.getBButtonPressed()){
                 drivetrain.drivetrain.arcadeDrive(0, 0);
             }
             
             //turn differently (not moving forward or backward) when left stick pressed
-            else if(XboxController0.getStickButtonPressed(Hand.kLeft)){
+            else if(XboxController0.getLeftStickButtonPressed()){
                 drivetrain.drivetrain.arcadeDrive(0, x_axis);
             }
             //get controller left stick x and y to set speed and rotation
@@ -133,4 +136,4 @@ public class Robot extends TimedRobot {
         }*/
         }
     }
-}
+//}

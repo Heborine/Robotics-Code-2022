@@ -1,13 +1,15 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.command.Subsystem;
+//import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.RobotMap;
 import java.lang.System;
-import edu.wpi.first.wpilibj.Spark;
+//import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
 
-public class Climber extends Subsystem{
+public class Climber implements Subsystem{
+    public Spark climberMotor;
     public Climber(){
         climberMotor = new Spark(RobotMap.climberMotor);
         climberMotor.setInverted(false);
@@ -20,9 +22,9 @@ public class Climber extends Subsystem{
         climberMotor.set(RobotMap.climberPower * -1);
     }
 
-    @Override
-    protected void initDefaultCommand() {
-        // TODO Auto-generated method stub
+    // @Override
+    // protected void initDefaultCommand() {
+    //     // TODO Auto-generated method stub
         
-    }
+    // }
 }

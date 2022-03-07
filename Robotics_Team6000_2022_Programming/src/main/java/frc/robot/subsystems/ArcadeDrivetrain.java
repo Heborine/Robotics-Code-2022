@@ -1,13 +1,14 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.command.Subsystem;
+//import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.RobotMap;
 import java.lang.System;
 
-public class ArcadeDrivetrain extends Subsystem{
+public class ArcadeDrivetrain implements Subsystem{
     public VictorSP leftMotor;
     public VictorSP rightMotor;
     public DifferentialDrive drivetrain;
@@ -114,7 +115,7 @@ public class ArcadeDrivetrain extends Subsystem{
     }
     */
 
-    @Override
-    protected void initDefaultCommand() {
-    }
+    // @Override
+    // protected void initDefaultCommand() {
+    // }
 }
