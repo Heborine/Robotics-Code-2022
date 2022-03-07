@@ -78,6 +78,8 @@ public class Robot extends TimedRobot {
             }
         } 
         else {
+            double x_axis = (XboxController0.getLeftX() * RobotMap.drivetrainPower);
+            double y_axis = (XboxController0.getLeftY() * RobotMap.drivetrainPower);
             //full stop
             if(XboxController0.getBButtonPressed()){
                 drivetrain.drivetrain.arcadeDrive(0, 0);
@@ -96,28 +98,28 @@ public class Robot extends TimedRobot {
             }
         }
         //set shooters to right back trigger
-        shooter.topMotor.set(XboxController0.getTriggerAxis(Hand.kRight) * RobotMap.shooterPower);
-        shooter.bottomMotor.set(XboxController0.getTriggerAxis(Hand.kRight) * RobotMap.shooterPower);
+        shooter.topMotor.set(XboxController0.getRightTriggerAxis() * RobotMap.shooterPower);
+        shooter.bottomMotor.set(XboxController0.getRightTriggerAxis() * RobotMap.shooterPower);
 
-        while (XboxController0.getBumperPressed(Hand.kRight)) {
+        while (XboxController0.getRightBumperPressed()) {
             intake.intakeExtender.set(-1 * RobotMap.rollerExtendPower);
         }
 
-        while (XboxController0.getBumperPressed(Hand.kLeft)){
+        while (XboxController0.getLeftBumperPressed()){
             intake.intakeExtender.set(1 * RobotMap.rollerExtendPower);
         }
 
-        while (XboxController0.getBumperReleased(Hand.kRight) & XboxController0.getBumperReleased(Hand.kLeft)) {
+        while (XboxController0.getRightBumperReleased() & XboxController0.getLeftBumperReleased()) {
         intake.intakeExtender.set(0.0);
         }
 
-        intake.intakeRoller.set(XboxController0.getTriggerAxis(Hand.kLeft) * RobotMap.intakeSpeed);
+        intake.intakeRoller.set(XboxController0.getLeftTriggerAxis() * RobotMap.intakeSpeed);
 
         while(XboxController0.getAButtonPressed()){
-            climber.climberMotor.raiseClimber();
+            climber.raiseClimber();
         }
         while(XboxController0.getYButtonPressed()){
-            climber.climberMotor.lowerClimber();
+            climber.lowerClimber();
         }
         //smoother movement and more adjustable
         //edit for arcade drive with power
