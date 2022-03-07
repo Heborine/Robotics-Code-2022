@@ -38,36 +38,21 @@ public class Shooter extends Robot implements Subsystem {
     shooter.bottomMotor.set(0);
   }
 
-// <<<<<<< HEAD
-// <<<<<<< HEAD
-// <<<<<<< HEAD
-// <<<<<<< HEAD
-// =======
-// =======
-// >>>>>>> parent of 29a9c82 (more info)
-// =======
-// >>>>>>> parent of 29a9c82 (more info)
   // useful info: https://docs.limelightvision.io/en/latest/cs_autorange.html
   // public void Checker(){
   //   @Override
   //   public void ShooterDistanceRender() {
   //         Update_Limelight_Tracking();
-// =======
+
   // useful info: https://docs.limelightvision.io/en/latest/cs_autorange.html
   //public void Checker(){
   //  @Override
   //  public void ShooterDistanceRender() {
    //       Update_Limelight_Tracking();
-// >>>>>>> parent of 29a9c82 (more info)
-
 //         if (m_LimelightHasValidTarget){
-
 //       }
 //         else{
-
-// // <<<<<<< HEAD
 //       }
-// =======
     //  }
 /*
     public void Update_Limelight_Tracking_Shooter()
@@ -76,12 +61,10 @@ public class Shooter extends Robot implements Subsystem {
           final double Motor_K = 0.26;                    
           final double DESIRED_TARGET_AREA = 13.0;        
           final double MAX_DRIVE = 0.7;                  
-  
           double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
           double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
           double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
           double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
-  
           if (tv < 1.0)
           {
             m_LimelightHasValidTarget = false;
@@ -89,31 +72,19 @@ public class Shooter extends Robot implements Subsystem {
             m_LimelightMotorCommand = 0.0;
             return;
           }
-  
           m_LimelightHasValidTarget = true;
-  
           if m_LimelightHasValidTarget = true{
             double drive_cmd = (DESIRED_TARGET_AREA - ta) * DRIVE_K;
           }
-          
           if (drive_cmd > MAX_DRIVE)
           {
             drive_cmd = MAX_DRIVE;
           }
           m_LimelightDriveCommand = drive_cmd;
-        // */}
-
-// >>>>>>> parent of 29a9c82 (more info)
-
-          
+        // */}          
 //     }
-
 //   }
-
-// >>>>>>> parent of 29a9c82 (more info)
   // @Override
   // public void initDefaultCommand() {
-  // }
-
-  
+  // }  
 //}

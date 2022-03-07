@@ -13,7 +13,7 @@ package frc.robot;
 
 public class RobotMap {
   // Drivetrain
-  public static int leftDrivetrain = 2;
+  public static int leftDrivetrain = 1;
   public static int rightDrivetrain = 0;
 
   public static int leftDrivetrainEncoderA = 0;
@@ -52,38 +52,6 @@ public class RobotMap {
   public static int climberMotor = 9;
 
   public static double climberPower = 1.0;
-
-
-  // // Magazine
-  // public static int magazineMotor = 3;
-
-  // public static int magazineEncoderA = 4;
-  // public static int magazineEncoderB = 5;
-
-  // public static double magazinePower = 0.6;
-
-  // public static double indexDelay = 0.5;  // indexDelay should be the same as indexDelayAdjusted
-  // public static double indexDelayAdjusted = 0.5; 
-
-  // public static boolean delayIsAdjusted = false;
-
-  // public static int numberOfBalls = 0;
-
-  // public static double magazineEncoder_RadiansPerPulse = 2*3.14/512; //Check, assume encoders have 512 pulse/rev
-  // public static double magazineEncoder_MaxPeriod = 1.0;
-  // public static double magazineEncoder_MinRate = 6*3.14;
-
-  // public static boolean magazineEncoder_Reverse = false;
-
-  // public static double magazineRotationDistance = 0.01; // Tune this!
-
-
-  // // Elevator
-  // public static int extendElevator = 5;
-  // public static int liftRobot = 6;
-
-  // public static double extendPower = 0.5;
-  // public static double liftPower = 0.8;
 
 
   // Controller Ports
