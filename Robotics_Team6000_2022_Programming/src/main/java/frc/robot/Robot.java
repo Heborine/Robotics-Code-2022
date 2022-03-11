@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 import frc.robot.subsystems.ArcadeDrivetrain;
-import frc.robot.subsystems.AutonomousLimelight;
+//import frc.robot.subsystems.AutonomousLimelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
     public static ArcadeDrivetrain drivetrain;
     public static Shooter shooter;
     public static Climber climber;
-    public static AutonomousLimelight limelight;
+    //public static AutonomousLimelight limelight;
     public static Intake intake;
     public static double leftStickVal;
     public static double rightStickVal;
@@ -42,27 +42,32 @@ public class Robot extends TimedRobot {
         drivetrain = new ArcadeDrivetrain();
         shooter = new Shooter();
         climber = new Climber();
-        limelight = new AutonomousLimelight();
+        //limelight = new AutonomousLimelight();
         intake = new Intake();
 
         XboxController0 = new XboxController(RobotMap.XboxController0);
         XboxController1 = new XboxController(RobotMap.XboxController1);
     }
-
+/*
     @Override
     public void autonomousPeriodic() {
-        limelight.autoPeriodic();
+        //limelight.autoPeriodic();
         drivetrain.driveRoute();
         shooter.Firing();
         Timer.delay(5);
         shooter.StopFiring();
     }
-
+*/
     @Override
     public void teleopPeriodic() {
+        double x_axis = (XboxController0.getLeftX() * RobotMap.drivetrainPower);
+        double y_axis = (XboxController0.getLeftY() * RobotMap.drivetrainPower);
+        drivetrain.drivetrain.arcadeDrive(y_axis, x_axis);
+        System.out.println("working...");
         //if the start button is pressed, set the controls to tank drive - else, use arcadedrive - control swap
         //double x_axis = XboxController0.getLeftX();
         //double y_axis = XboxController0.getLeftY();
+        /*
         if(XboxController0.getStartButtonPressed()){
             double y_axis_left = (XboxController0.getLeftY() * RobotMap.drivetrainPower);
             double y_axis_right = (XboxController0.getRightY() * RobotMap.drivetrainPower);
@@ -136,6 +141,7 @@ public class Robot extends TimedRobot {
         else{
             double y_axis = Math.pow(XboxController0.getY(Hand.kLeft), 2) * RobotMap.drivetrainPower;
         }*/
+        //*/
         }
     }
 //}

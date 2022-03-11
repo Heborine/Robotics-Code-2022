@@ -13,7 +13,7 @@ package frc.robot;
 
 public class RobotMap {
   // Drivetrain
-  public static int leftDrivetrain = 10;
+  public static int leftDrivetrain = 13;
   public static int rightDrivetrain = 0;
 
   public static int leftDrivetrainEncoderA = 0;
