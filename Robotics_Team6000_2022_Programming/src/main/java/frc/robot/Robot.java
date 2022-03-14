@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
         intake = new Intake();
 
         XboxController0 = new XboxController(RobotMap.XboxController0);
-        XboxController1 = new XboxController(RobotMap.XboxController1);
+        //XboxController1 = new XboxController(RobotMap.XboxController1);
     }
 /*
     @Override
