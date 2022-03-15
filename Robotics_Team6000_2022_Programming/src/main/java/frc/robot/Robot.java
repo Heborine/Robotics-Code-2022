@@ -63,7 +63,8 @@ public class Robot extends TimedRobot {
         double x_axis = (XboxController0.getLeftX() * RobotMap.drivetrainPower);
         double y_axis = (XboxController0.getLeftY() * RobotMap.drivetrainPower);
         drivetrain.drivetrain.arcadeDrive(y_axis, x_axis);
-        System.out.println("working...");
+        System.out.println(y_axis);
+
         //if the start button is pressed, set the controls to tank drive - else, use arcadedrive - control swap
         //double x_axis = XboxController0.getLeftX();
         //double y_axis = XboxController0.getLeftY();
@@ -77,7 +78,7 @@ public class Robot extends TimedRobot {
             else{
                 while(XboxController0.getXButtonPressed()){
                     //reverse controls
-                    drivetrain.drivetrain.tankDrive((-1 * y_axis_left), (-1 * y_axis_right));
+                    drivetrain.drivetrain.tankDrive((-y_axis_left), (-y_axis_right));
                 }
                 drivetrain.drivetrain.tankDrive(y_axis_left, y_axis_right);
             }
