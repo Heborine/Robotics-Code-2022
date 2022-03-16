@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.RobotMap;
 import java.lang.System;
 
-public class ArcadeDrivetrain implements Subsystem{
+public class DrivetrainMotors implements Subsystem{
     public VictorSP leftMotor;
     public VictorSP rightMotor;
     public DifferentialDrive drivetrain;
@@ -16,7 +16,7 @@ public class ArcadeDrivetrain implements Subsystem{
     public Encoder rightEncoder;
 
     //Constructor
-    public ArcadeDrivetrain() {
+    public DrivetrainMotors() {
         leftMotor = new VictorSP(RobotMap.leftDrivetrain);
         rightMotor = new VictorSP(RobotMap.rightDrivetrain);
         drivetrain = new DifferentialDrive(leftMotor, rightMotor);

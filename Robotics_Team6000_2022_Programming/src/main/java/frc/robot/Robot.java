@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-import frc.robot.subsystems.ArcadeDrivetrain;
+import frc.robot.subsystems.DrivetrainMotors;
 //import frc.robot.subsystems.AutonomousLimelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Climber;
@@ -26,7 +26,7 @@ import frc.robot.subsystems.Intake;
 
 
 public class Robot extends TimedRobot {
-    public static ArcadeDrivetrain drivetrain;
+    public static DrivetrainMotors drivetrain;
     public static Shooter shooter;
     public static Climber climber;
     //public static AutonomousLimelight limelight;
@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        drivetrain = new ArcadeDrivetrain();
+        drivetrain = new DrivetrainMotors();
         shooter = new Shooter();
         climber = new Climber();
         //limelight = new AutonomousLimelight();
@@ -63,7 +63,8 @@ public class Robot extends TimedRobot {
         double x_axis = (XboxController0.getLeftX() * RobotMap.drivetrainPower);
         double y_axis = (XboxController0.getLeftY() * RobotMap.drivetrainPower);
         drivetrain.drivetrain.arcadeDrive(y_axis, x_axis);
-        System.out.println("working...");
+        System.out.println(y_axis);
+
         //if the start button is pressed, set the controls to tank drive - else, use arcadedrive - control swap
         //double x_axis = XboxController0.getLeftX();
         //double y_axis = XboxController0.getLeftY();
@@ -77,7 +78,7 @@ public class Robot extends TimedRobot {
             else{
                 while(XboxController0.getXButtonPressed()){
                     //reverse controls
-                    drivetrain.drivetrain.tankDrive((-1 * y_axis_left), (-1 * y_axis_right));
+                    drivetrain.drivetrain.tankDrive((-y_axis_left), (-y_axis_right));
                 }
                 drivetrain.drivetrain.tankDrive(y_axis_left, y_axis_right);
             }
