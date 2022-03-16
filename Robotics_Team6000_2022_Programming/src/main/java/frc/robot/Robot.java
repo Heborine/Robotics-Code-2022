@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-import frc.robot.subsystems.ArcadeDrivetrain;
+import frc.robot.subsystems.DrivetrainMotors;
 //import frc.robot.subsystems.AutonomousLimelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Climber;
@@ -26,7 +26,7 @@ import frc.robot.subsystems.Intake;
 
 
 public class Robot extends TimedRobot {
-    public static ArcadeDrivetrain drivetrain;
+    public static DrivetrainMotors drivetrain;
     public static Shooter shooter;
     public static Climber climber;
     //public static AutonomousLimelight limelight;
@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        drivetrain = new ArcadeDrivetrain();
+        drivetrain = new DrivetrainMotors();
         shooter = new Shooter();
         climber = new Climber();
         //limelight = new AutonomousLimelight();
