@@ -14,7 +14,7 @@ package frc.robot;
 public class RobotMap {
   // Drivetrain
   public static int leftDrivetrain = 0;
-  public static int rightDrivetrain = 8;
+  public static int rightDrivetrain = 1; //final
 
   public static int leftDrivetrainEncoderA = 0;
   public static int leftDrivetrainEncoderB = 1;
@@ -28,7 +28,7 @@ public class RobotMap {
   public static boolean leftDrivetrainEncoder_Reverse = false;
   public static boolean rightDrivetrainEncoder_Reverse = true;
   
-  public static double drivetrainPower = 0.85;
+  public static double drivetrainPower = 0.5; //slow down 
   public static double fineDrivetrainPower = 0.8;
 
 
@@ -41,7 +41,7 @@ public class RobotMap {
 
   // Intake
   public static int intakeRoller = 17;
-  public static int intakeExtender = 0;
+  public static int intakeExtender = 19 ;
 
   public static double intakeSpeed = 0.5;
   public static double intakeSpeedAdjusted = 0.5;

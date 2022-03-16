@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
 
     public static XboxController XboxController0;
     public static XboxController XboxController1;
+    public static boolean arcadeDriveActive = true;
 
     @Override
     public void robotInit() {
@@ -60,16 +61,19 @@ public class Robot extends TimedRobot {
 */
     @Override
     public void teleopPeriodic() {
-        double x_axis = (XboxController0.getLeftX() * RobotMap.drivetrainPower);
-        double y_axis = (XboxController0.getLeftY() * RobotMap.drivetrainPower);
-        drivetrain.drivetrain.arcadeDrive(y_axis, x_axis);
-        System.out.println(y_axis);
 
-        //if the start button is pressed, set the controls to tank drive - else, use arcadedrive - control swap
-        //double x_axis = XboxController0.getLeftX();
-        //double y_axis = XboxController0.getLeftY();
+        /*test one motor: */
+        // drivetrain.drivetrain.arcadeDrive(y_axis, x_axis);
+
+        //if the start button is pressed, set the controls to tank drive - else, use arcadedrive -- control swap
+
         /*
+        delete asterisk below to comment out entire control scheme
+        */
         if(XboxController0.getStartButtonPressed()){
+            if (arcadeDriveActive) { arcadeDriveActive = false; } else { arcadeDriveActive = true; }
+        }
+        if(!arcadeDriveActive) {
             double y_axis_left = (XboxController0.getLeftY() * RobotMap.drivetrainPower);
             double y_axis_right = (XboxController0.getRightY() * RobotMap.drivetrainPower);
             if(XboxController0.getBButtonPressed()){
@@ -78,14 +82,22 @@ public class Robot extends TimedRobot {
             else{
                 while(XboxController0.getXButtonPressed()){
                     //reverse controls
-                    drivetrain.drivetrain.tankDrive((-y_axis_left), (-y_axis_right));
+                    drivetrain.drivetrain.tankDrive(-y_axis_left, -y_axis_right);
                 }
                 drivetrain.drivetrain.tankDrive(y_axis_left, y_axis_right);
             }
-        } 
+        }
         else {
-            double x_axis = (XboxController0.getLeftX() * RobotMap.drivetrainPower);
-            double y_axis = (XboxController0.getLeftY() * RobotMap.drivetrainPower);
+            //smoother movement and more adjustable
+            //edit for arcade drive with power
+
+            //set variables to: (controller input, squared) * (limit set in RobotMap.java) * ((controller input) / (absolute value(controller input)))
+            //makes sure that variables are always positive
+            double x_axis = Math.pow(XboxController0.getLeftX(), 2) * RobotMap.drivetrainPower * (XboxController0.getLeftX()/Math.abs(XboxController0.getLeftX()));
+            double y_axis = Math.pow(XboxController0.getLeftY(), 2) * RobotMap.drivetrainPower * (XboxController0.getLeftY()/Math.abs(XboxController0.getLeftY()));
+
+            System.out.println(y_axis);
+            
             //full stop
             if(XboxController0.getBButtonPressed()){
                 drivetrain.drivetrain.arcadeDrive(0, 0);
@@ -93,14 +105,14 @@ public class Robot extends TimedRobot {
             
             //turn differently (not moving forward or backward) when left stick pressed
             else if(XboxController0.getLeftStickButtonPressed()){
-                drivetrain.drivetrain.arcadeDrive(0, x_axis);
+                drivetrain.drivetrain.arcadeDrive(0, y_axis);
             }
             //get controller left stick x and y to set speed and rotation
             else{
                 while(XboxController0.getXButtonPressed()){
-                    drivetrain.drivetrain.arcadeDrive((-1 * y_axis), x_axis);
+                    drivetrain.drivetrain.arcadeDrive(x_axis, -y_axis);
                 }
-                drivetrain.drivetrain.arcadeDrive(y_axis, x_axis);
+                drivetrain.drivetrain.arcadeDrive(x_axis, y_axis);
             }
         }
         //set shooters to right back trigger
@@ -127,22 +139,5 @@ public class Robot extends TimedRobot {
         while(XboxController0.getYButtonPressed()){
             climber.lowerClimber();
         }
-        //smoother movement and more adjustable
-        //edit for arcade drive with power
-        /*
-        if(XboxController0.getX(Hand.kLeft) < 0){
-            double x_axis = Math.pow(XboxController0.getX(Hand.kLeft), 2) * RobotMap.drivetrainPower * -1;
-        }
-        else{
-            double x_axis = Math.pow(XboxController0.getX(Hand.kLeft), 2) * RobotMap.drivetrainPower;
-        }
-        if(XboxController0.getY(Hand.kLeft) < 0){
-            double y_axis = Math.pow(XboxController0.getY(Hand.kLeft), 2) * RobotMap.drivetrainPower * -1;
-        }
-        else{
-            double y_axis = Math.pow(XboxController0.getY(Hand.kLeft), 2) * RobotMap.drivetrainPower;
-        }*/
-        //*/
-        }
     }
-//}
+}
