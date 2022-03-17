@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
         //if the start button is pressed, set the controls to tank drive - else, use arcadedrive -- control swap
 
         /*
-        delete asterisk below to comment out entire control scheme
+        delete asterisk on next line to comment out entire control scheme
         */
         if(XboxController0.getStartButtonPressed()){
             if (arcadeDriveActive) { arcadeDriveActive = false; } else { arcadeDriveActive = true; }
@@ -120,11 +120,11 @@ public class Robot extends TimedRobot {
         shooter.bottomMotor.set(XboxController0.getRightTriggerAxis() * RobotMap.shooterPower);
 
         while (XboxController0.getRightBumperPressed()) {
-            intake.intakeExtender.set(-1 * RobotMap.rollerExtendPower);
+            intake.intakeExtender.set(-RobotMap.rollerExtendPower);
         }
 
         while (XboxController0.getLeftBumperPressed()){
-            intake.intakeExtender.set(1 * RobotMap.rollerExtendPower);
+            intake.intakeExtender.set(RobotMap.rollerExtendPower);
         }
 
         while (XboxController0.getRightBumperReleased() & XboxController0.getLeftBumperReleased()) {
