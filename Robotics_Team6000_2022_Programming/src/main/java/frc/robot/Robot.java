@@ -97,22 +97,15 @@ public class Robot extends TimedRobot {
 
             //set variables to: (controller input, squared) * (limit set in RobotMap.java) * ((controller input) / (absolute value(controller input)))
             //makes sure that variables are always positive
-            // don't crash by division of 0
-            if(getLeftX != 0 & getLeftY != 0){
-                x_axis = Math.pow(getLeftX, 2) * RobotMap.drivetrainPower * (getLeftX/Math.abs(getLeftX));
-                y_axis = Math.pow(getLeftY, 2) * RobotMap.drivetrainPower * (getLeftY/Math.abs(getLeftY));
-            }
-            else if(getLeftX == 0 & getLeftY != 0){
+            if (getLeftX == 0) {
                 x_axis = 0;
-                y_axis = Math.pow(getLeftY, 2) * RobotMap.drivetrainPower * (getLeftY/Math.abs(getLeftY));
-            }
-            else if(getLeftX != 0 & getLeftY == 0){
+            } else {
                 x_axis = Math.pow(getLeftX, 2) * RobotMap.drivetrainPower * (getLeftX/Math.abs(getLeftX));
+            }
+            if (getLeftY == 0) {
                 y_axis = 0;
-                }
-            else{
-                x_axis = 0;
-                y_axis = 0;
+            } else {
+                y_axis = Math.pow(getLeftY, 2) * RobotMap.drivetrainPower * (getLeftY/Math.abs(getLeftY));
             }
             System.out.println(y_axis);
             
