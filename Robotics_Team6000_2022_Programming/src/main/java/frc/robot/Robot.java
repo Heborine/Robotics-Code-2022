@@ -88,14 +88,32 @@ public class Robot extends TimedRobot {
             }
         }
         else {
+            double y_axis = 0;
+            double x_axis = 0;
+            double getLeftX = XboxController0.getLeftX();
+            double getLeftY = XboxController0.getLeftY();
             //smoother movement and more adjustable
             //edit for arcade drive with power
 
             //set variables to: (controller input, squared) * (limit set in RobotMap.java) * ((controller input) / (absolute value(controller input)))
             //makes sure that variables are always positive
-            double x_axis = Math.pow(XboxController0.getLeftX(), 2) * RobotMap.drivetrainPower * (XboxController0.getLeftX()/Math.abs(XboxController0.getLeftX()));
-            double y_axis = Math.pow(XboxController0.getLeftY(), 2) * RobotMap.drivetrainPower * (XboxController0.getLeftY()/Math.abs(XboxController0.getLeftY()));
-
+            // don't crash by division of 0
+            if(getLeftX != 0 & getLeftY != 0){
+                x_axis = Math.pow(getLeftX, 2) * RobotMap.drivetrainPower * (getLeftX/Math.abs(getLeftX));
+                y_axis = Math.pow(getLeftY, 2) * RobotMap.drivetrainPower * (getLeftY/Math.abs(getLeftY));
+            }
+            else if(getLeftX == 0 & getLeftY != 0){
+                x_axis = 0;
+                y_axis = Math.pow(getLeftY, 2) * RobotMap.drivetrainPower * (getLeftY/Math.abs(getLeftY));
+            }
+            else if(getLeftX != 0 & getLeftY == 0){
+                x_axis = Math.pow(getLeftX, 2) * RobotMap.drivetrainPower * (getLeftX/Math.abs(getLeftX));
+                y_axis = 0;
+                }
+            else{
+                x_axis = 0;
+                y_axis = 0;
+            }
             System.out.println(y_axis);
             
             //full stop
