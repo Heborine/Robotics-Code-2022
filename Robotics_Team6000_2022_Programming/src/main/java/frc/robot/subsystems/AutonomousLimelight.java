@@ -131,6 +131,8 @@ public class AutonomousLimelight extends Robot implements Subsystem  {
         final double DESIRED_TARGET_AREA = 13.0;        // Area of the target when the robot reaches the wall
         final double MAX_DRIVE = 0.7;                   // Simple speed limit so we don't drive too fast
 
+
+        // resource for what these mean: https://docs.limelightvision.io/en/latest/networktables_api.html
         double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
         double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
         double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
@@ -145,6 +147,8 @@ public class AutonomousLimelight extends Robot implements Subsystem  {
         }
 
         m_LimelightHasValidTarget = true;
+
+        //can make an edit here potentially for if it is true we return the values to the controller outside of just autonomous mode
 
         // Start with proportional steering
         double steer_cmd = tx * STEER_K;

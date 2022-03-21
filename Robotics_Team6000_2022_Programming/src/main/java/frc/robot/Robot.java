@@ -73,6 +73,8 @@ public class Robot extends TimedRobot {
         if(XboxController0.getStartButtonPressed()){
             if (arcadeDriveActive) { arcadeDriveActive = false; } else { arcadeDriveActive = true; }
         }
+        // if there is a valid target by the limelight maybe input something here to have the controller react
+
         if(!arcadeDriveActive) {
             double y_axis_left = (XboxController0.getLeftY() * RobotMap.drivetrainPower);
             double y_axis_right = (XboxController0.getRightY() * RobotMap.drivetrainPower);
