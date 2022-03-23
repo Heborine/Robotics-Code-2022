@@ -79,11 +79,12 @@ public class Robot extends TimedRobot {
             double y_axis_left = (XboxController0.getLeftY() * RobotMap.drivetrainPower);
             double y_axis_right = (XboxController0.getRightY() * RobotMap.drivetrainPower);
             if(XboxController0.getBButtonPressed()){
+                //full stop
                 drivetrain.drivetrain.tankDrive(0, 0);
             }
             else{
+                //reverse controls
                 while(XboxController0.getXButtonPressed()){
-                    //reverse controls
                     drivetrain.drivetrain.tankDrive(-y_axis_left, -y_axis_right);
                 }
                 drivetrain.drivetrain.tankDrive(y_axis_left, y_axis_right);

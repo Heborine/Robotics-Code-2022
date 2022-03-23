@@ -13,7 +13,7 @@ package frc.robot;
 
 public class RobotMap {
   // Drivetrain
-  public static int leftDrivetrain = 0;
+  public static int leftDrivetrain = 5;
   public static int rightDrivetrain = 1; //final
 
   public static int leftDrivetrainEncoderA = 0;
@@ -28,12 +28,12 @@ public class RobotMap {
   public static boolean leftDrivetrainEncoder_Reverse = false;
   public static boolean rightDrivetrainEncoder_Reverse = true;
   
-  public static double drivetrainPower = 0.5; //slow down 
+  public static double drivetrainPower = 1; //slow down 
   public static double fineDrivetrainPower = 0.8;
 
 
   // Shooter
-  public static int topShooter = 4;
+  public static int topShooter = 18;
   public static int bottomShooter = 12;
 
   public static double shooterPower = 0.75;
