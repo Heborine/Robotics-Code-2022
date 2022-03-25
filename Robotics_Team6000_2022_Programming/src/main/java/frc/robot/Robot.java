@@ -84,9 +84,9 @@ public class Robot extends TimedRobot {
             //simple acceleration curve
             double y_left = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
             double y_right = getRightY * Math.abs(getRightY) * RobotMap.drivetrainPower;
-            if (y_right != 0) {
-                y_left *= 0.8;
-            }
+            // if (y_right != 0) {
+            //     y_left *= 0.5;
+            // }
             // System.out.println(speed);
 
             if(XboxController0.getBButtonPressed()){
@@ -122,10 +122,10 @@ public class Robot extends TimedRobot {
         // while (XboxController0.)
         // three motors for shooting: top, bottom, and magazine
         shooter.topMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
-        shooter.bottomMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
+        shooter.bottomMotor.set(-XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
         
         while (XboxController1.getYButtonPressed()) {
-            shooter.magazine.set(1 * RobotMap.magazinePower);
+            shooter.magazine.set(RobotMap.magazinePower);
         }
 
         //intake extension
