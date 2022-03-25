@@ -33,15 +33,16 @@ public class RobotMap {
   public static boolean rightDrivetrainEncoder_Reverse = true;
   
   public static double drivetrainPower = .70; //slow down 
-  // public static double fineDrivetrainPower = 0.8;
 
 
   // Shooter
   public static int topShooter = 6;
   public static int bottomShooter = 2;
-  public static int magazine = 5;
-
   public static double shooterPower = 0.7;
+
+  // Magazine
+  public static int magazine = 5;
+  public static double magazinePower = 1;
 
 
   // Intake

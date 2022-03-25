@@ -38,6 +38,7 @@ public class Robot extends TimedRobot {
     public static XboxController XboxController1;
     public static boolean arcadeDriveActive = true;
     public static boolean intakeActive = false;
+    // public static boolean magazineActive = false;
 
     @Override
     public void robotInit() {
@@ -83,6 +84,9 @@ public class Robot extends TimedRobot {
             //simple acceleration curve
             double y_left = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
             double y_right = getRightY * Math.abs(getRightY) * RobotMap.drivetrainPower;
+            if (y_right != 0) {
+                y_left *= 0.8;
+            }
             // System.out.println(speed);
 
             if(XboxController0.getBButtonPressed()){
@@ -91,9 +95,6 @@ public class Robot extends TimedRobot {
             }
             else{
                 //reverse controls
-                while(XboxController0.getXButtonPressed()){
-                    drivetrain.drivetrain.tankDrive(-y_left, -y_right);
-                }
                 drivetrain.drivetrain.tankDrive(-y_left, -y_right);
             }
         }
@@ -102,22 +103,18 @@ public class Robot extends TimedRobot {
             double getLeftY = XboxController0.getLeftY();
             
             //simple acceleration curve
-            double rotation = getLeftX * Math.abs(getLeftX) * RobotMap.drivetrainPower;
             double speed = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
+            double rotation = getLeftX * Math.abs(getLeftX) * RobotMap.drivetrainPower;
             // System.out.println(speed);
             
             //full stop
             if(XboxController0.getBButtonPressed()){
                 drivetrain.drivetrain.arcadeDrive(0, 0);
             }
-            
             //turn differently (not moving forward or backward) when left stick pressed
             else if(XboxController0.getLeftStickButtonPressed()){
                 drivetrain.drivetrain.arcadeDrive(speed, 0);
             } else {
-                while(XboxController0.getXButtonPressed()){
-                    drivetrain.drivetrain.arcadeDrive(speed, -rotation); //UNSURE -- NEGATIVE MAY BE WRONG
-                }
                 drivetrain.drivetrain.arcadeDrive(-speed, rotation);
             }
         }
@@ -126,7 +123,10 @@ public class Robot extends TimedRobot {
         // three motors for shooting: top, bottom, and magazine
         shooter.topMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
         shooter.bottomMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
-        shooter.magazine.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
+        
+        while (XboxController1.getYButtonPressed()) {
+            shooter.magazine.set(1 * RobotMap.magazinePower);
+        }
 
         //intake extension
         /*
