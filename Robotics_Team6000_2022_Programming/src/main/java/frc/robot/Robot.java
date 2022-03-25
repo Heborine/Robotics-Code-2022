@@ -77,10 +77,14 @@ public class Robot extends TimedRobot {
         // if there is a valid target by the limelight maybe input something here to have the controller react
 
         if(!arcadeDriveActive) {
-            double left_stick = XboxController0.getLeftY();
-            double right_stick = XboxController0.getRightY();
-            double y_axis_left = (left_stick * RobotMap.drivetrainPower * (left_stick/Math.abs(left_stick)));
-            double y_axis_right = (right_stick * RobotMap.drivetrainPower * (right_stick/Math.abs(right_stick)));
+            double getLeftY = XboxController0.getLeftY();
+            double getRightY = XboxController0.getRightY();
+            
+            //simple acceleration curve
+            double y_left = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
+            double y_right = getRightY * Math.abs(getRightY) * RobotMap.drivetrainPower;
+            // System.out.println(y_axis);
+
             if(XboxController0.getBButtonPressed()){
                 //full stop
                 drivetrain.drivetrain.tankDrive(0, 0);
@@ -94,21 +98,12 @@ public class Robot extends TimedRobot {
             }
         }
         else {
-            double y_axis = 0;
-            double x_axis = 0;
             double getLeftX = XboxController0.getLeftX();
             double getLeftY = XboxController0.getLeftY();
-            //smoother movement and more adjustable
-            //edit for arcade drive with power
-
-            //set variables to: (controller input, squared) * (limit set in RobotMap.java) * ((controller input) / (absolute value(controller input)))
-            //makes sure that variables are always positive
-            if (getLeftX != 0){
-                x_axis = Math.pow(getLeftX, 2) * RobotMap.drivetrainPower * (getLeftX/Math.abs(getLeftX));
-            }
-            if (getLeftY != 0){
-                y_axis = Math.pow(getLeftY, 2) * RobotMap.drivetrainPower * (getLeftY/Math.abs(getLeftY));
-            }
+            
+            //simple acceleration curve
+            double x_axis = getLeftX * Math.abs(getLeftX) * RobotMap.drivetrainPower;
+            double y_axis = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
             // System.out.println(y_axis);
             
             //full stop
