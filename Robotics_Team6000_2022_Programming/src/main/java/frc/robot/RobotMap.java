@@ -6,6 +6,10 @@
 /*----------------------------------------------------------------------------*/
 
 
+/* 0.7 */
+
+
+
 //various variables:
 //spark inputs, misc
 
@@ -13,7 +17,7 @@ package frc.robot;
 
 public class RobotMap {
   // Drivetrain
-  public static int leftDrivetrain = 5;
+  public static int leftDrivetrain = 0;
   public static int rightDrivetrain = 1; //final
 
   public static int leftDrivetrainEncoderA = 0;
@@ -28,19 +32,20 @@ public class RobotMap {
   public static boolean leftDrivetrainEncoder_Reverse = false;
   public static boolean rightDrivetrainEncoder_Reverse = true;
   
-  public static double drivetrainPower = 1; //slow down 
-  public static double fineDrivetrainPower = 0.8;
+  public static double drivetrainPower = .70; //slow down 
+  // public static double fineDrivetrainPower = 0.8;
 
 
   // Shooter
-  public static int topShooter = 18;
-  public static int bottomShooter = 12;
+  public static int topShooter = 15;
+  public static int bottomShooter = 2;
+  public static int bottomShooterMag = 18;
 
-  public static double shooterPower = 0.75;
+  public static double shooterPower = 0.7;
 
 
   // Intake
-  public static int intakeRoller = 17;
+  public static int intakeRoller = 5;
   public static int intakeExtender = 19 ;
 
   public static double intakeSpeed = 0.5;
@@ -50,8 +55,7 @@ public class RobotMap {
 
   // Climber
   public static int climberMotor = 9;
-
-  public static double climberPower = 1.0;
+  public static double climberPower = 0.7;
 
 
   // Controller Ports

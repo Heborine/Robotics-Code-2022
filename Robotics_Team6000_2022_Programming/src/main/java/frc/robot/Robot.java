@@ -37,6 +37,7 @@ public class Robot extends TimedRobot {
     public static XboxController XboxController0;
     public static XboxController XboxController1;
     public static boolean arcadeDriveActive = true;
+    public static boolean intakeActive = false;
 
     @Override
     public void robotInit() {
@@ -47,7 +48,7 @@ public class Robot extends TimedRobot {
         intake = new Intake();
 
         XboxController0 = new XboxController(RobotMap.XboxController0);
-        //XboxController1 = new XboxController(RobotMap.XboxController1);
+        XboxController1 = new XboxController(RobotMap.XboxController1);
     }
 /*
     @Override
@@ -70,14 +71,16 @@ public class Robot extends TimedRobot {
         /*
         delete asterisk on next line to comment out entire control scheme
         */
-        if(XboxController0.getStartButtonPressed()){
+        if(XboxController0.getStartButtonPressed()) {
             if (arcadeDriveActive) { arcadeDriveActive = false; } else { arcadeDriveActive = true; }
         }
         // if there is a valid target by the limelight maybe input something here to have the controller react
 
         if(!arcadeDriveActive) {
-            double y_axis_left = (XboxController0.getLeftY() * RobotMap.drivetrainPower);
-            double y_axis_right = (XboxController0.getRightY() * RobotMap.drivetrainPower);
+            double left_stick = XboxController0.getLeftY();
+            double right_stick = XboxController0.getRightY();
+            double y_axis_left = (left_stick * RobotMap.drivetrainPower * (left_stick/Math.abs(left_stick)));
+            double y_axis_right = (right_stick * RobotMap.drivetrainPower * (right_stick/Math.abs(right_stick)));
             if(XboxController0.getBButtonPressed()){
                 //full stop
                 drivetrain.drivetrain.tankDrive(0, 0);
@@ -106,7 +109,7 @@ public class Robot extends TimedRobot {
             if (getLeftY != 0){
                 y_axis = Math.pow(getLeftY, 2) * RobotMap.drivetrainPower * (getLeftY/Math.abs(getLeftY));
             }
-            System.out.println(y_axis);
+            // System.out.println(y_axis);
             
             //full stop
             if(XboxController0.getBButtonPressed()){
@@ -126,29 +129,40 @@ public class Robot extends TimedRobot {
             }
         }
         //set shooters to right back trigger
-        shooter.topMotor.set(XboxController0.getRightTriggerAxis() * RobotMap.shooterPower);
-        shooter.bottomMotor.set(XboxController0.getRightTriggerAxis() * RobotMap.shooterPower);
+        // while (XboxController0.)
+        // three motors for shooting: top, bottom, and magazine
+        shooter.topMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
+        shooter.bottomMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
+        shooter.bottomMotorMag.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
 
-        while (XboxController0.getRightBumperPressed()) {
-            intake.intakeExtender.set(-RobotMap.rollerExtendPower);
-        }
+        //intake extension
+        while (XboxController1.getRightBumperPressed() && XboxController0.getLeftBumperReleased()) { intake.intakeExtender.set(-RobotMap.rollerExtendPower); }
+        while (XboxController1.getLeftBumperPressed() && XboxController1.getRightBumperReleased()) { intake.intakeExtender.set(RobotMap.rollerExtendPower); }
+        while (XboxController1.getRightBumperReleased() && XboxController0.getLeftBumperReleased()) { intake.intakeExtender.set(0.0); }
 
-        while (XboxController0.getLeftBumperPressed()){
-            intake.intakeExtender.set(RobotMap.rollerExtendPower);
+        if (XboxController1.getXButtonPressed()) {
+            if (intakeActive){
+                intakeActive = false;
+                intake.intakeRoller.set(0); 
+            }  
+            else{
+                intakeActive = true;
+                intake.intakeRoller.set(RobotMap.intakeSpeed);
+            } 
         }
+        // if (intakeActive) {
+        //     intake.intakeRoller.set(RobotMap.intakeSpeed);
+        // }
+        // else{
+        //     intake.intakeRoller.set(0);
+        // }
 
-        while (XboxController0.getRightBumperReleased() & XboxController0.getLeftBumperReleased()) {
-        intake.intakeExtender.set(0.0);
-        }
-
-        intake.intakeRoller.set(XboxController0.getLeftTriggerAxis() * RobotMap.intakeSpeed);
-
-        while(XboxController0.getAButtonPressed()){
-            climber.raiseClimber();
-        }
-        while(XboxController0.getYButtonPressed()){
-            climber.lowerClimber();
-        }
+        // while(XboxController0.getAButtonPressed()){
+        //     climber.raiseClimber();
+        // }
+        // while(XboxController0.getYButtonPressed()){
+        //     climber.lowerClimber();
+        // }
     }
 }
 // we can add a second controller portion if we want to split the subsystems potentially
