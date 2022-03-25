@@ -16,17 +16,17 @@ import frc.robot.RobotMap;
 public class Shooter extends Robot implements Subsystem {
   public Spark topMotor;
   public Spark bottomMotor;
-  public Spark bottomMotorMag;
+  public Spark magazine;
 
   public Shooter() {
     topMotor = new Spark(RobotMap.topShooter);
     bottomMotor = new Spark(RobotMap.bottomShooter);
-    bottomMotorMag = new Spark(RobotMap.bottomShooterMag);
+    magazine = new Spark(RobotMap.magazine);
 
     // Ensures that motors keep running during Timer.delay()
     topMotor.setSafetyEnabled(false);
     bottomMotor.setSafetyEnabled(false);
-    bottomMotorMag.setSafetyEnabled(false);
+    magazine.setSafetyEnabled(false);
 
   }
 
@@ -35,12 +35,12 @@ public class Shooter extends Robot implements Subsystem {
     //for autonomous - set variable dependent instead of 1
     shooter.topMotor.set(RobotMap.shooterPower);
     shooter.bottomMotor.set(RobotMap.shooterPower);
-    shooter.bottomMotorMag.set(RobotMap.shooterPower);
+    shooter.magazine.set(RobotMap.shooterPower);
   }
   public void StopFiring(){
     shooter.topMotor.set(0);
     shooter.bottomMotor.set(0);
-    shooter.bottomMotorMag.set(0);
+    shooter.magazine.set(0);
   }
 
   // useful info: https://docs.limelightvision.io/en/latest/cs_autorange.html

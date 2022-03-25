@@ -39,7 +39,7 @@ public class RobotMap {
   // Shooter
   public static int topShooter = 6;
   public static int bottomShooter = 2;
-  public static int bottomShooterMag = 18;
+  public static int magazine = 5;
 
   public static double shooterPower = 0.7;
 

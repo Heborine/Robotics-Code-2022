@@ -126,7 +126,7 @@ public class Robot extends TimedRobot {
         // three motors for shooting: top, bottom, and magazine
         shooter.topMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
         shooter.bottomMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
-        // shooter.bottomMotorMag.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
+        shooter.magazine.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
 
         //intake extension
         /*
