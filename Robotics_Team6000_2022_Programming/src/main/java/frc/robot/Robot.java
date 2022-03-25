@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
 
         /*test one motor: */
-        // drivetrain.drivetrain.arcadeDrive(y_axis, x_axis);
+        // drivetrain.drivetrain.arcadeDrive(speed, rotation);
 
         //if the start button is pressed, set the controls to tank drive - else, use arcadedrive -- control swap
 
@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
             //simple acceleration curve
             double y_left = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
             double y_right = getRightY * Math.abs(getRightY) * RobotMap.drivetrainPower;
-            // System.out.println(y_axis);
+            // System.out.println(speed);
 
             if(XboxController0.getBButtonPressed()){
                 //full stop
@@ -102,9 +102,9 @@ public class Robot extends TimedRobot {
             double getLeftY = XboxController0.getLeftY();
             
             //simple acceleration curve
-            double x_axis = getLeftX * Math.abs(getLeftX) * RobotMap.drivetrainPower;
-            double y_axis = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
-            // System.out.println(y_axis);
+            double rotation = getLeftX * Math.abs(getLeftX) * RobotMap.drivetrainPower;
+            double speed = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
+            // System.out.println(speed);
             
             //full stop
             if(XboxController0.getBButtonPressed()){
@@ -113,12 +113,12 @@ public class Robot extends TimedRobot {
             
             //turn differently (not moving forward or backward) when left stick pressed
             else if(XboxController0.getLeftStickButtonPressed()){
-                drivetrain.drivetrain.arcadeDrive(y_axis, 0);
+                drivetrain.drivetrain.arcadeDrive(speed, 0);
             } else {
                 while(XboxController0.getXButtonPressed()){
-                    drivetrain.drivetrain.arcadeDrive(y_axis, -x_axis); //UNSURE -- NEGATIVE MAY BE WRONG
+                    drivetrain.drivetrain.arcadeDrive(speed, -rotation); //UNSURE -- NEGATIVE MAY BE WRONG
                 }
-                drivetrain.drivetrain.arcadeDrive(-y_axis, x_axis);
+                drivetrain.drivetrain.arcadeDrive(-speed, rotation);
             }
         }
         //set shooters to right back trigger
