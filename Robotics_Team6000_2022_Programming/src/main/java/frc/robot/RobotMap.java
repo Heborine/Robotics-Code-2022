@@ -37,7 +37,7 @@ public class RobotMap {
 
 
   // Shooter
-  public static int topShooter = 15;
+  public static int topShooter = 6;
   public static int bottomShooter = 2;
   public static int bottomShooterMag = 18;
 
@@ -45,8 +45,8 @@ public class RobotMap {
 
 
   // Intake
-  public static int intakeRoller = 5;
-  public static int intakeExtender = 19 ;
+  public static int intakeRoller = 3;
+  public static int intakeExtender = 4 ;
 
   public static double intakeSpeed = 0.5;
   public static double intakeSpeedAdjusted = 0.5;
