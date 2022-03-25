@@ -92,9 +92,9 @@ public class Robot extends TimedRobot {
             else{
                 //reverse controls
                 while(XboxController0.getXButtonPressed()){
-                    drivetrain.drivetrain.tankDrive(-y_axis_left, -y_axis_right);
+                    drivetrain.drivetrain.tankDrive(-y_left, -y_right);
                 }
-                drivetrain.drivetrain.tankDrive(y_axis_left, y_axis_right);
+                drivetrain.drivetrain.tankDrive(-y_left, -y_right);
             }
         }
         else {
@@ -113,14 +113,12 @@ public class Robot extends TimedRobot {
             
             //turn differently (not moving forward or backward) when left stick pressed
             else if(XboxController0.getLeftStickButtonPressed()){
-                drivetrain.drivetrain.arcadeDrive(0, y_axis);
-            }
-            //get controller left stick x and y to set speed and rotation
-            else{
+                drivetrain.drivetrain.arcadeDrive(y_axis, 0);
+            } else {
                 while(XboxController0.getXButtonPressed()){
-                    drivetrain.drivetrain.arcadeDrive(x_axis, -y_axis);
+                    drivetrain.drivetrain.arcadeDrive(y_axis, -x_axis); //UNSURE -- NEGATIVE MAY BE WRONG
                 }
-                drivetrain.drivetrain.arcadeDrive(x_axis, y_axis);
+                drivetrain.drivetrain.arcadeDrive(-y_axis, x_axis);
             }
         }
         //set shooters to right back trigger
@@ -128,12 +126,14 @@ public class Robot extends TimedRobot {
         // three motors for shooting: top, bottom, and magazine
         shooter.topMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
         shooter.bottomMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
-        shooter.bottomMotorMag.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
+        // shooter.bottomMotorMag.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
 
         //intake extension
+        /*
         while (XboxController1.getRightBumperPressed() && XboxController0.getLeftBumperReleased()) { intake.intakeExtender.set(-RobotMap.rollerExtendPower); }
         while (XboxController1.getLeftBumperPressed() && XboxController1.getRightBumperReleased()) { intake.intakeExtender.set(RobotMap.rollerExtendPower); }
         while (XboxController1.getRightBumperReleased() && XboxController0.getLeftBumperReleased()) { intake.intakeExtender.set(0.0); }
+        */
 
         if (XboxController1.getXButtonPressed()) {
             if (intakeActive){
