@@ -65,13 +65,13 @@ public class RobotMap {
 
 
   // Miscellany
-  public static boolean collectMode = false;
+  //public static boolean collectMode = false;
 
 
   // For Testing
-  public static boolean activateSensor = true;
-  public static boolean rotationMode = false;
-  public static boolean autoMode = false;
+  //public static boolean activateSensor = true;
+  //public static boolean rotationMode = false;
+  //public static boolean autoMode = false;
 
 
   // public static boolean toggleOn1 = false;

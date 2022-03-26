@@ -39,41 +39,78 @@ public class Robot extends TimedRobot {
     public static boolean arcadeDriveActive = true;
     public static boolean intakeActive = false;
     // public static boolean magazineActive = false;
+    boolean limelight_on = true;
 
     @Override
     public void robotInit() {
         drivetrain = new DrivetrainMotors();
         shooter = new Shooter();
-        climber = new Climber();
+        //climber = new Climber();
         //limelight = new AutonomousLimelight();
         intake = new Intake();
 
         XboxController0 = new XboxController(RobotMap.XboxController0);
         XboxController1 = new XboxController(RobotMap.XboxController1);
     }
-/*
+
     @Override
     public void autonomousPeriodic() {
         //limelight.autoPeriodic();
-        drivetrain.driveRoute();
-        shooter.Firing();
-        Timer.delay(5);
-        shooter.StopFiring();
+        //drivetrain.driveRoute();
+        //shooter.Firing();
+        //Timer.delay(5);
+        //shooter.StopFiring();
+        float KpAim = -0.1f;
+        float KpDistance = -0.1f;
+        float min_aim_command = 0.05f;
+
+        double left_command = 0;
+        double right_command = 0;
+        
+        double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+        double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+        
+        if (limelight_on){
+                double heading_error = -tx;
+                double distance_error = -ty;
+                double steering_adjust = 0.0f;
+        
+                if (tx > 1.0){
+                        steering_adjust = KpAim*heading_error - min_aim_command;
+                }
+                else if (tx < -1.0){
+                        steering_adjust = KpAim*heading_error + min_aim_command;
+                }
+        
+                double distance_adjust = KpDistance * distance_error;
+        
+                left_command = steering_adjust + distance_adjust;
+                right_command = steering_adjust + distance_adjust;
+        }
+        //maybe adjust here
+        drivetrain.drivetrain.tankDrive(left_command, right_command);
+
+        if(left_command == 0 && right_command == 0){
+            limelight_on = false;
+            shooter.Firing();
+            Timer.delay(1.5);
+            shooter.StopFiring();
+        }
     }
-*/
+
     @Override
     public void teleopPeriodic() {
-
-        /*test one motor: */
-        // drivetrain.drivetrain.arcadeDrive(speed, rotation);
-
-        //if the start button is pressed, set the controls to tank drive - else, use arcadedrive -- control swap
-
         /*
         delete asterisk on next line to comment out entire control scheme
         */
+
+        //if the start button is pressed, set the controls to tank drive - else, use arcadedrive -- control swap
         if(XboxController0.getStartButtonPressed()) {
-            if (arcadeDriveActive) { arcadeDriveActive = false; } else { arcadeDriveActive = true; }
+            if (arcadeDriveActive){
+                arcadeDriveActive = false;
+            } else{
+                arcadeDriveActive = true;
+            }
         }
         // if there is a valid target by the limelight maybe input something here to have the controller react
 
@@ -84,10 +121,6 @@ public class Robot extends TimedRobot {
             //simple acceleration curve
             double y_left = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
             double y_right = getRightY * Math.abs(getRightY) * RobotMap.drivetrainPower;
-            // if (y_right != 0) {
-            //     y_left *= 0.5;
-            // }
-            // System.out.println(speed);
 
             if(XboxController0.getBButtonPressed()){
                 //full stop
@@ -103,9 +136,9 @@ public class Robot extends TimedRobot {
             double getLeftY = XboxController0.getLeftY();
             
             //simple acceleration curve
-            double speed = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
+            //negative robot map to fix inverted control pattern
+            double speed = getLeftY * Math.abs(getLeftY) * -RobotMap.drivetrainPower;
             double rotation = getLeftX * Math.abs(getLeftX) * RobotMap.drivetrainPower;
-            // System.out.println(speed);
             
             //full stop
             if(XboxController0.getBButtonPressed()){
@@ -114,27 +147,33 @@ public class Robot extends TimedRobot {
             //turn differently (not moving forward or backward) when left stick pressed
             else if(XboxController0.getLeftStickButtonPressed()){
                 drivetrain.drivetrain.arcadeDrive(speed, 0);
-            } else {
-                drivetrain.drivetrain.arcadeDrive(-speed, rotation);
+            } 
+            else {
+                drivetrain.drivetrain.arcadeDrive(speed, rotation);
             }
         }
         //set shooters to right back trigger
-        // while (XboxController0.)
         // three motors for shooting: top, bottom, and magazine
         shooter.topMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
         shooter.bottomMotor.set(-XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
         
-        while (XboxController1.getYButtonPressed()) {
-            shooter.magazine.set(RobotMap.magazinePower);
-        }
+        // if(XboxController1.getYButtonPressed()) {
+        //     shooter.magazine.set(RobotMap.magazinePower);
+        // }
+        shooter.magazine.set(XboxController1.getLeftTriggerAxis() * RobotMap.magazinePower);
 
         //intake extension
-        /*
-        while (XboxController1.getRightBumperPressed() && XboxController0.getLeftBumperReleased()) { intake.intakeExtender.set(-RobotMap.rollerExtendPower); }
-        while (XboxController1.getLeftBumperPressed() && XboxController1.getRightBumperReleased()) { intake.intakeExtender.set(RobotMap.rollerExtendPower); }
-        while (XboxController1.getRightBumperReleased() && XboxController0.getLeftBumperReleased()) { intake.intakeExtender.set(0.0); }
-        */
-
+        if(XboxController1.getRightBumperPressed() && XboxController0.getLeftBumperReleased()){
+            intake.intakeExtender.set(-RobotMap.rollerExtendPower);
+        }
+        else if(XboxController1.getLeftBumperPressed() && XboxController1.getRightBumperReleased()){
+            intake.intakeExtender.set(RobotMap.rollerExtendPower);
+        }
+        else{
+            intake.intakeExtender.set(0.0);
+        }
+        
+        //toggle
         if (XboxController1.getXButtonPressed()) {
             if (intakeActive){
                 intakeActive = false;
@@ -145,17 +184,11 @@ public class Robot extends TimedRobot {
                 intake.intakeRoller.set(RobotMap.intakeSpeed);
             } 
         }
-        // if (intakeActive) {
-        //     intake.intakeRoller.set(RobotMap.intakeSpeed);
-        // }
-        // else{
-        //     intake.intakeRoller.set(0);
-        // }
 
-        // while(XboxController0.getAButtonPressed()){
+        // if(XboxController1.getAButtonPressed()){
         //     climber.raiseClimber();
         // }
-        // while(XboxController0.getYButtonPressed()){
+        // if(XboxController1.getYButtonPressed()){
         //     climber.lowerClimber();
         // }
     }

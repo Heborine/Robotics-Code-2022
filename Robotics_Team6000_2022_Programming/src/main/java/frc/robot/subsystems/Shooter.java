@@ -35,7 +35,7 @@ public class Shooter extends Robot implements Subsystem {
     //for autonomous - set variable dependent instead of 1
     shooter.topMotor.set(RobotMap.shooterPower);
     shooter.bottomMotor.set(RobotMap.shooterPower);
-    shooter.magazine.set(RobotMap.shooterPower);
+    shooter.magazine.set(RobotMap.magazinePower);
   }
   public void StopFiring(){
     shooter.topMotor.set(0);
