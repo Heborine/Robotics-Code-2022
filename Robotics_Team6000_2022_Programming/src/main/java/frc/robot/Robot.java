@@ -12,6 +12,8 @@ import edu.wpi.first.cameraserver.*;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+
 import java.lang.System;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,7 +41,9 @@ public class Robot extends TimedRobot {
     public static boolean arcadeDriveActive = true;
     public static boolean intakeActive = false;
     // public static boolean magazineActive = false;
-    boolean limelight_on = true;
+    public static boolean limelight_on = true;
+    public static boolean verbose = true; //change this for amount of output. its a lot of output
+
 
     @Override
     public void robotInit() {
@@ -51,6 +55,8 @@ public class Robot extends TimedRobot {
 
         XboxController0 = new XboxController(RobotMap.XboxController0);
         XboxController1 = new XboxController(RobotMap.XboxController1);
+
+        System.out.println("Arcade Drive");
     }
 
     @Override
@@ -76,16 +82,16 @@ public class Robot extends TimedRobot {
                 double steering_adjust = 0.0f;
         
                 if (tx > 1.0){
-                        steering_adjust = KpAim*heading_error - min_aim_command;
+                    steering_adjust = KpAim*heading_error - min_aim_command;
                 }
                 else if (tx < -1.0){
-                        steering_adjust = KpAim*heading_error + min_aim_command;
+                    steering_adjust = KpAim*heading_error + min_aim_command;
                 }
         
                 double distance_adjust = KpDistance * distance_error;
         
-                left_command = steering_adjust + distance_adjust;
-                right_command = steering_adjust + distance_adjust;
+                left_command += steering_adjust + distance_adjust;
+                right_command -= steering_adjust + distance_adjust;
         }
         //maybe adjust here
         drivetrain.drivetrain.tankDrive(left_command, right_command);
@@ -108,15 +114,17 @@ public class Robot extends TimedRobot {
         if(XboxController0.getStartButtonPressed()) {
             if (arcadeDriveActive){
                 arcadeDriveActive = false;
+                System.out.println("Tank drive");
             } else{
                 arcadeDriveActive = true;
+                System.out.println("Arcade drive");
             }
         }
         // if there is a valid target by the limelight maybe input something here to have the controller react
 
         if(!arcadeDriveActive) {
             double getLeftY = XboxController0.getLeftY();
-            double getRightY = XboxController0.getRightY();
+            double getRightY = XboxController0. getRightY();
             
             //simple acceleration curve
             double y_left = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
@@ -157,32 +165,33 @@ public class Robot extends TimedRobot {
         shooter.topMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
         shooter.bottomMotor.set(-XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
         
-        // if(XboxController1.getYButtonPressed()) {
-        //     shooter.magazine.set(RobotMap.magazinePower);
-        // }
-        shooter.magazine.set(XboxController1.getLeftTriggerAxis() * RobotMap.magazinePower);
+        while(XboxController1.getYButton()) {
+            shooter.magazine.set(RobotMap.magazinePower);
+            if (verbose) System.out.println("Y pressed");
+        }
 
         //intake extension
-        if(XboxController1.getRightBumperPressed()){
+        while(XboxController1.getRightBumper()){
             intake.intakeExtender.set(-RobotMap.rollerExtendPower);
+            if (verbose) System.out.println("Right Bumper pressed");
         }
-        else if(XboxController1.getLeftBumperPressed()){
+        while(XboxController1.getLeftBumper()){
             intake.intakeExtender.set(RobotMap.rollerExtendPower);
+            if (verbose) System.out.println("Left Bumper pressed");
         }
-        else{
-            intake.intakeExtender.set(0.0);
-        }
+        intake.intakeExtender.set(0.0);
         
         //toggle
         if (XboxController1.getXButtonPressed()) {
             if (intakeActive){
                 intakeActive = false;
-                intake.intakeRoller.set(0); 
+                intake.intakeRoller.set(RobotMap.intakeSpeed);
             }  
             else{
                 intakeActive = true;
-                intake.intakeRoller.set(RobotMap.intakeSpeed);
+                intake.intakeRoller.set(0); 
             } 
+            if (verbose) System.out.println("X pressed");
         }
 
         // if(XboxController1.getAButtonPressed()){

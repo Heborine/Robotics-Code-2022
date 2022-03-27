@@ -22,6 +22,8 @@ public class Intake implements Subsystem {
         intakeRoller.setInverted(true);
         intakeRoller.setSafetyEnabled(false);
         intakeExtender = new Spark(RobotMap.intakeExtender);
+        intakeExtender.setInverted(true);
+        intakeExtender.setSafetyEnabled(false);
     }
 
     public void extendIntake() {
