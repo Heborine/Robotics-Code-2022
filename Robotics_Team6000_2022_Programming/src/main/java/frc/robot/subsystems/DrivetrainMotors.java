@@ -6,14 +6,13 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.RobotMap;
-import java.lang.System;
 
 public class DrivetrainMotors implements Subsystem{
     public VictorSP leftMotor;
     public VictorSP rightMotor;
     public DifferentialDrive drivetrain;
-    public Encoder leftEncoder;
-    public Encoder rightEncoder;
+    // public Encoder leftEncoder;
+    // public Encoder rightEncoder;
 
     //Constructor
     public DrivetrainMotors() {
@@ -50,8 +49,8 @@ public class DrivetrainMotors implements Subsystem{
 
         drivetrain.setSafetyEnabled(false);
     }
-
     public void driveRoute(){
+        /*
         // Drives backward at half speed until the robot has moved 5 feet, then stops
         double distance = leftEncoder.getDistance();
         while(distance < 5){
@@ -59,6 +58,7 @@ public class DrivetrainMotors implements Subsystem{
             drivetrain.arcadeDrive(-0.5, 0);
             distance = leftEncoder.getDistance();
         }
+        */
         // stops after while statement
         drivetrain.arcadeDrive(0, 0);
     }
