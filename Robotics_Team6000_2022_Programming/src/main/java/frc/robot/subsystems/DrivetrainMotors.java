@@ -25,12 +25,13 @@ public class DrivetrainMotors implements Subsystem{
         leftMotor.setInverted(false);
         rightMotor.setInverted(false);
 
-        leftEncoder = new Encoder(RobotMap.leftDrivetrainEncoderA, RobotMap.leftDrivetrainEncoderB, RobotMap.leftDrivetrainEncoder_Reverse, Encoder.EncodingType.k2X);
-        rightEncoder = new Encoder(RobotMap.rightDrivetrainEncoderA, RobotMap.rightDrivetrainEncoderB, RobotMap.rightDrivetrainEncoder_Reverse, Encoder.EncodingType.k2X);
+        // leftEncoder = new Encoder(RobotMap.leftDrivetrainEncoderA, RobotMap.leftDrivetrainEncoderB, RobotMap.leftDrivetrainEncoder_Reverse, Encoder.EncodingType.k2X);
+        // rightEncoder = new Encoder(RobotMap.rightDrivetrainEncoderA, RobotMap.rightDrivetrainEncoderB, RobotMap.rightDrivetrainEncoder_Reverse, Encoder.EncodingType.k2X);
     
     // Configures the encoder's distance-per-pulse
     // The robot moves forward 1 foot per encoder rotation
     // There are 256 pulses per encoder rotation
+        /*
         leftEncoder.reset();
         leftEncoder.setDistancePerPulse(1./256.);
         leftEncoder.setMaxPeriod(RobotMap.drivetrainEncoder_MaxPeriod);
@@ -45,6 +46,7 @@ public class DrivetrainMotors implements Subsystem{
         rightEncoder.setMinRate(RobotMap.drivetrainEncoder_MinRate);
         rightEncoder.setDistancePerPulse(RobotMap.drivetrainEncoder_RadiansPerPulse);
         rightEncoder.setSamplesToAverage(7);
+        */
 
         drivetrain.setSafetyEnabled(false);
     }

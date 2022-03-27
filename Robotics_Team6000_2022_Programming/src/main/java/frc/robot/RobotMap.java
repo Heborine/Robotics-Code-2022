@@ -21,17 +21,17 @@ public class RobotMap {
   public static int rightDrivetrain = 1; //final
   public static double drivetrainPower = 0.8; //slow down 
 
-  public static int leftDrivetrainEncoderA = 0;
-  public static int leftDrivetrainEncoderB = 1;
-  public static int rightDrivetrainEncoderA = 2;
-  public static int rightDrivetrainEncoderB = 3;
+  // public static int leftDrivetrainEncoderA = 0;
+  // public static int leftDrivetrainEncoderB = 1;
+  // public static int rightDrivetrainEncoderA = 2;
+  // public static int rightDrivetrainEncoderB = 3;
 
-  public static double drivetrainEncoder_RadiansPerPulse = 2*3.14/512; //Check, assume encoders have 512 pulse/rev
-  public static double drivetrainEncoder_MaxPeriod = 1.0;
-  public static double drivetrainEncoder_MinRate = 6*3.14;
+  // public static double drivetrainEncoder_RadiansPerPulse = 2*3.14/512; //Check, assume encoders have 512 pulse/rev
+  // public static double drivetrainEncoder_MaxPeriod = 1.0;
+  // public static double drivetrainEncoder_MinRate = 6*3.14;
 
-  public static boolean leftDrivetrainEncoder_Reverse = false;
-  public static boolean rightDrivetrainEncoder_Reverse = true;
+  // public static boolean leftDrivetrainEncoder_Reverse = false;
+  // public static boolean rightDrivetrainEncoder_Reverse = true;
 
 
   // Shooter
