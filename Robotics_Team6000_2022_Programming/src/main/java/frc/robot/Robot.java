@@ -163,10 +163,10 @@ public class Robot extends TimedRobot {
         shooter.magazine.set(XboxController1.getLeftTriggerAxis() * RobotMap.magazinePower);
 
         //intake extension
-        if(XboxController1.getRightBumperPressed() && XboxController0.getLeftBumperReleased()){
+        if(XboxController1.getRightBumperPressed()){
             intake.intakeExtender.set(-RobotMap.rollerExtendPower);
         }
-        else if(XboxController1.getLeftBumperPressed() && XboxController1.getRightBumperReleased()){
+        else if(XboxController1.getLeftBumperPressed()){
             intake.intakeExtender.set(RobotMap.rollerExtendPower);
         }
         else{
