@@ -122,6 +122,7 @@ public class Robot extends TimedRobot {
         }
         // if there is a valid target by the limelight maybe input something here to have the controller react
 
+        //tank drive
         if(!arcadeDriveActive) {
             double getLeftY = XboxController0.getLeftY();
             double getRightY = XboxController0. getRightY();
@@ -129,7 +130,7 @@ public class Robot extends TimedRobot {
             //simple acceleration curve
             double y_left = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
             double y_right = getRightY * Math.abs(getRightY) * RobotMap.drivetrainPower;
-
+            y_left *= 0.9;
             if(XboxController0.getBButtonPressed()){
                 //full stop
                 drivetrain.drivetrain.tankDrive(0, 0);
@@ -139,6 +140,7 @@ public class Robot extends TimedRobot {
                 drivetrain.drivetrain.tankDrive(-y_left, -y_right);
             }
         }
+        //arcade drive:
         else {
             double getLeftX = XboxController0.getLeftX();
             double getLeftY = XboxController0.getLeftY();
@@ -160,17 +162,20 @@ public class Robot extends TimedRobot {
                 drivetrain.drivetrain.arcadeDrive(speed, rotation);
             }
         }
+
         //set shooters to right back trigger
         // three motors for shooting: top, bottom, and magazine
         shooter.topMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
         shooter.bottomMotor.set(-XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
         
+        //magazine
         while(XboxController1.getYButton()) {
             shooter.magazine.set(RobotMap.magazinePower);
             if (verbose) System.out.println("Y pressed");
         }
+        shooter.magazine.set(0);
 
-        //intake extension
+        //intake extension/retraction
         while(XboxController1.getRightBumper()){
             intake.intakeExtender.set(-RobotMap.rollerExtendPower);
             if (verbose) System.out.println("Right Bumper pressed");
@@ -181,7 +186,7 @@ public class Robot extends TimedRobot {
         }
         intake.intakeExtender.set(0.0);
         
-        //toggle
+        //toggle intake
         if (XboxController1.getXButtonPressed()) {
             if (intakeActive){
                 intakeActive = false;
@@ -202,4 +207,3 @@ public class Robot extends TimedRobot {
         // }
     }
 }
-// we can add a second controller portion if we want to split the subsystems potentially

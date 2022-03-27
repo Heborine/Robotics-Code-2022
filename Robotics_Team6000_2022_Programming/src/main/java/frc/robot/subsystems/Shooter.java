@@ -32,7 +32,6 @@ public class Shooter extends Robot implements Subsystem {
 
   public void Firing(){
     //needs trigger power
-    //for autonomous - set variable dependent instead of 1
     shooter.topMotor.set(RobotMap.shooterPower);
     shooter.bottomMotor.set(RobotMap.shooterPower);
     shooter.magazine.set(RobotMap.magazinePower);

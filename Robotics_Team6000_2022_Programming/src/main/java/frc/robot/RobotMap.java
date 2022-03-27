@@ -19,6 +19,7 @@ public class RobotMap {
   // Drivetrain
   public static int leftDrivetrain = 0;
   public static int rightDrivetrain = 1; //final
+  public static double drivetrainPower = 0.8; //slow down 
 
   public static int leftDrivetrainEncoderA = 0;
   public static int leftDrivetrainEncoderB = 1;
@@ -31,8 +32,6 @@ public class RobotMap {
 
   public static boolean leftDrivetrainEncoder_Reverse = false;
   public static boolean rightDrivetrainEncoder_Reverse = true;
-  
-  public static double drivetrainPower = 0.8; //slow down 
 
 
   // Shooter
@@ -50,7 +49,7 @@ public class RobotMap {
   public static int intakeExtender = 4;
 
   public static double intakeSpeed = 0.9;
-  public static double intakeSpeedAdjusted = 0.5;
+  // public static double intakeSpeedAdjusted = 0.5;
 
   public static double rollerExtendPower = 0.9;
 
