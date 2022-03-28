@@ -3,21 +3,22 @@ package frc.robot.subsystems;
 //import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+//import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.RobotMap;
 
 public class DrivetrainMotors implements Subsystem{
-    public VictorSP leftMotor;
-    public VictorSP rightMotor;
+    public Spark leftMotor;
+    public Spark rightMotor;
     public DifferentialDrive drivetrain;
     // public Encoder leftEncoder;
     // public Encoder rightEncoder;
 
     //Constructor
     public DrivetrainMotors() {
-        leftMotor = new VictorSP(RobotMap.leftDrivetrain);
-        rightMotor = new VictorSP(RobotMap.rightDrivetrain);
+        leftMotor = new Spark(RobotMap.leftDrivetrain);
+        rightMotor = new Spark(RobotMap.rightDrivetrain);
         drivetrain = new DifferentialDrive(leftMotor, rightMotor);
         
         //set to true if the motor polarity needs to be flipped

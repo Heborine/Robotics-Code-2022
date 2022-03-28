@@ -41,7 +41,7 @@ public class Shooter extends Robot implements Subsystem {
     shooter.bottomMotor.set(0);
     shooter.magazine.set(0);
   }
-
+}
   // useful info: https://docs.limelightvision.io/en/latest/cs_autorange.html
   // public void Checker(){
   //   @Override
@@ -85,7 +85,7 @@ public class Shooter extends Robot implements Subsystem {
             drive_cmd = MAX_DRIVE;
           }
           m_LimelightDriveCommand = drive_cmd;
-        // */}          
+        // *///}          
 //     }
 //   }
   // @Override
