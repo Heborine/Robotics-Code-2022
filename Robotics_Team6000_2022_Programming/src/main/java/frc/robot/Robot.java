@@ -169,28 +169,45 @@ public class Robot extends TimedRobot {
         shooter.bottomMotor.set(-XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
         
         //magazine
-        while(XboxController1.getYButton()) {
+        
+        // while(XboxController1.getYButton()) {
+        //     shooter.magazine.set(RobotMap.magazinePower);
+        //     if (verbose) System.out.println("Y pressed");
+        // }
+        // shooter.magazine.set(0);
+        // //reverse magazine
+        // while(XboxController1.getAButton()) {
+        //     shooter.magazine.set(RobotMap.reverseMagazinePower);
+        //     if (verbose) System.out.println("A pressed");
+        // }
+        // shooter.magazine.set(0);
+
+        if(XboxController1.getYButton()) {
             shooter.magazine.set(RobotMap.magazinePower);
             if (verbose) System.out.println("Y pressed");
         }
-        shooter.magazine.set(0);
         //reverse magazine
-        while(XboxController1.getAButton()) {
+        else if(XboxController1.getAButton()) {
             shooter.magazine.set(RobotMap.reverseMagazinePower);
             if (verbose) System.out.println("A pressed");
         }
-        shooter.magazine.set(0);
+        else{
+            shooter.magazine.set(0);
+            if (verbose) System.out.println("A and Y not pressed");
+        }
 
         //intake extension/retraction
-        while(XboxController1.getRightBumper()){
+        if(XboxController1.getRightBumper()){
             intake.intakeExtender.set(-RobotMap.rollerExtendPower);
             if (verbose) System.out.println("Right Bumper pressed");
         }
-        while(XboxController1.getLeftBumper()){
+        if(XboxController1.getLeftBumper()){
             intake.intakeExtender.set(RobotMap.rollerExtendPower);
             if (verbose) System.out.println("Left Bumper pressed");
         }
-        intake.intakeExtender.set(0.0);
+        if(!XboxController1.getRightBumper() && !XboxController1.getLeftBumper()){
+            intake.intakeExtender.set(0.0);
+        }
         
         //toggle intake
         if (XboxController1.getXButtonPressed()) {
