@@ -125,7 +125,7 @@ public class Robot extends TimedRobot {
         //tank drive
         if(!arcadeDriveActive) {
             double getLeftY = XboxController0.getLeftY();
-            double getRightY = XboxController0. getRightY();
+            double getRightY = XboxController0.getRightY();
             
             //simple acceleration curve
             double y_left = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
@@ -196,11 +196,11 @@ public class Robot extends TimedRobot {
         if (XboxController1.getXButtonPressed()) {
             if (intakeActive){
                 intakeActive = false;
-                intake.intakeRoller.set(RobotMap.intakeSpeed);
+                intake.intakeRoller.set(0); 
             }  
             else{
                 intakeActive = true;
-                intake.intakeRoller.set(0); 
+                intake.intakeRoller.set(RobotMap.intakeSpeed);
             } 
             if (verbose) System.out.println("X pressed");
         }
