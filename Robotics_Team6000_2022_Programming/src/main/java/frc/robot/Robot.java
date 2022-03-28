@@ -228,5 +228,41 @@ public class Robot extends TimedRobot {
         // if(XboxController1.getYButtonPressed()){
         //     climber.lowerClimber();
         // }
+
+        //controller rumble by limelight
+        float KpAim = -0.1f;
+        float KpDistance = -0.1f;
+        float min_aim_command = 0.05f;
+
+        double left_command = 0;
+        double right_command = 0;
+        
+        double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+        double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+        
+        if (limelight_on){
+                double heading_error = -tx;
+                double distance_error = -ty;
+                double steering_adjust = 0.0f;
+        
+                if (tx > 1.0){
+                    steering_adjust = KpAim*heading_error - min_aim_command;
+                }
+                else if (tx < -1.0){
+                    steering_adjust = KpAim*heading_error + min_aim_command;
+                }
+        
+                double distance_adjust = KpDistance * distance_error;
+        
+                left_command += steering_adjust + distance_adjust;
+                right_command -= steering_adjust + distance_adjust;
+        }
+        if(left_command == 0 && right_command == 0){
+            XboxController0.setRumble(RumbleType.kLeftRumble, 2);
+            XboxController0.setRumble(RumbleType.kRightRumble, 2);
+            XboxController1.setRumble(RumbleType.kLeftRumble, 2);
+            XboxController1.setRumble(RumbleType.kRightRumble, 2);
+            if (verbose) System.out.println("Rumble");
+        }
     }
 }
