@@ -41,7 +41,8 @@ public class RobotMap {
 
   // Magazine
   public static int magazine = 5;
-  public static double magazinePower = 1;
+  public static double magazinePower = -0.75;
+  public static double reverseMagazinePower = 0.4;
 
 
   // Intake

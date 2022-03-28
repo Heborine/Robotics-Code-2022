@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
 
     public static XboxController XboxController0;
     public static XboxController XboxController1;
-    public static boolean arcadeDriveActive = true;
+    public static boolean arcadeDriveActive = false;
     public static boolean intakeActive = false;
     // public static boolean magazineActive = false;
     public static boolean limelight_on = true;
@@ -172,6 +172,12 @@ public class Robot extends TimedRobot {
         while(XboxController1.getYButton()) {
             shooter.magazine.set(RobotMap.magazinePower);
             if (verbose) System.out.println("Y pressed");
+        }
+        shooter.magazine.set(0);
+        //reverse magazine
+        while(XboxController1.getAButton()) {
+            shooter.magazine.set(RobotMap.reverseMagazinePower);
+            if (verbose) System.out.println("A pressed");
         }
         shooter.magazine.set(0);
 
