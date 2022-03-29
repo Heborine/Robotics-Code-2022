@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 //import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -32,9 +34,12 @@ public class Shooter extends Robot implements Subsystem {
 
   public void Firing(){
     //needs trigger power
+    System.out.println("Firing");
     shooter.topMotor.set(RobotMap.shooterPower);
-    shooter.bottomMotor.set(RobotMap.shooterPower);
+    shooter.bottomMotor.set(-RobotMap.shooterPower);
+    Timer.delay(1);
     shooter.magazine.set(RobotMap.magazinePower);
+    Timer.delay(1);
   }
   public void StopFiring(){
     shooter.topMotor.set(0);

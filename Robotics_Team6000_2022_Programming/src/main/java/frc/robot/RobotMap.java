@@ -19,7 +19,7 @@ public class RobotMap {
   // Drivetrain
   public static int leftDrivetrain = 0;
   public static int rightDrivetrain = 1; //final
-  public static double drivetrainPower = 0.8; //slow down 
+  public static double drivetrainPower = 0.9; //slow down 
 
   // public static int leftDrivetrainEncoderA = 0;
   // public static int leftDrivetrainEncoderB = 1;
@@ -37,11 +37,11 @@ public class RobotMap {
   // Shooter
   public static int topShooter = 6;
   public static int bottomShooter = 2;
-  public static double shooterPower = 0.7;
+  public static double shooterPower = 0.8;
 
   // Magazine
   public static int magazine = 5;
-  public static double magazinePower = -0.75;
+  public static double magazinePower = -0.7;
   public static double reverseMagazinePower = 0.4;
 
 
@@ -49,15 +49,13 @@ public class RobotMap {
   public static int intakeRoller = 3; 
   public static int intakeExtender = 4;
 
-  public static double intakeSpeed = 0.9;
+  public static double intakeSpeed = 1;
   // public static double intakeSpeedAdjusted = 0.5;
-
   public static double rollerExtendPower = 0.9;
 
   // Climber
   public static int climberMotor = 9;
   public static double climberPower = 0.7;
-
 
   // Controller Ports
   public static int XboxController0 = 0;
@@ -66,7 +64,7 @@ public class RobotMap {
 
   // Miscellany
   //public static boolean collectMode = false;
-
+  public static double vibratePower = 0;
 
   // For Testing
   //public static boolean activateSensor = true;
