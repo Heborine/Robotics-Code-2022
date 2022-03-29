@@ -1,5 +1,5 @@
 //define control scheme -- arcade vs. tank
-
+// Control Scheme Document so far: https://docs.google.com/document/d/1rWMHrpDTBKcG1Q6-gbv4yI6xAS-BwlAHAO730PDODtk/edit
 
 package frc.robot;
 
@@ -8,16 +8,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 //import edu.wpi.first.wpilibj.GenericHID.Hand;
 //import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.cameraserver.*;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
+// import edu.wpi.first.cameraserver.*;
+// import edu.wpi.first.networktables.NetworkTable;
+// import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 import java.lang.System;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 import frc.robot.subsystems.DrivetrainMotors;
@@ -142,6 +142,10 @@ public class Robot extends TimedRobot {
                 //full stop
                 drivetrain.drivetrain.tankDrive(0, 0);
             }
+            //turn in place
+            else if(XboxController0.getLeftStickButtonPressed()){
+                drivetrain.drivetrain.tankDrive(y_left, -y_right);
+            }
             else{
                 //reverse controls
                 drivetrain.drivetrain.tankDrive(-y_left, -y_right);
@@ -246,7 +250,22 @@ public class Robot extends TimedRobot {
         
         double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
         double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
-        
+    /*    
+        if (XboxController1.getAButtonPressed()) {
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").setNumber(<value>);
+
+
+            if (intakeActive){
+                intakeActive = false;
+                intake.intakeRoller.set(0); 
+            }  
+            else{
+                intakeActive = true;
+                intake.intakeRoller.set(RobotMap.intakeSpeed);
+            } 
+            if (verbose) System.out.println("A pressed");
+        }
+    */
         if (limelight_on){
                 double heading_error = -tx;
                 double distance_error = -ty;

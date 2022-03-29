@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 //import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
-import edu.wpi.first.wpilibj.Encoder;
+// import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.RobotMap;
 
 public class DrivetrainMotors implements Subsystem{
@@ -80,6 +80,7 @@ public class DrivetrainMotors implements Subsystem{
         drivetrain.arcadeDrive(0, 0);
     }
 
+}
     /*
     public void turnright(int xSpeed, int zRotation){
 
@@ -121,4 +122,4 @@ public class DrivetrainMotors implements Subsystem{
     // @Override
     // protected void initDefaultCommand() {
     // }
-}
+    

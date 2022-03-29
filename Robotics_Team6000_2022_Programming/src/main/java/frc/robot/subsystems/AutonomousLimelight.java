@@ -5,13 +5,17 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+//import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+//import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 //import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+
+// the new library replacement for this is now updated so if there is an issue just switch this back
+// import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+
 //import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -37,8 +41,10 @@ public class AutonomousLimelight extends Robot implements Subsystem  {
   private VictorSP m_Left1 = new VictorSP(1);
   private VictorSP m_Right0 = new VictorSP(2);
   private VictorSP m_Right1 = new VictorSP(3);
-  private SpeedControllerGroup m_LeftMotors = new SpeedControllerGroup(m_Left0,m_Left1);
-  private SpeedControllerGroup m_RightMotors = new SpeedControllerGroup(m_Right0,m_Right1);
+ // private SpeedControllerGroup m_LeftMotors = new SpeedControllerGroup(m_Left0,m_Left1);
+ // private SpeedControllerGroup m_RightMotors = new SpeedControllerGroup(m_Right0,m_Right1);
+  private MotorControllerGroup m_LeftMotors = new MotorControllerGroup(m_Left0,m_Left1);
+  private MotorControllerGroup m_RightMotors = new MotorControllerGroup(m_Right0,m_Right1);
   private DifferentialDrive m_Drive = new DifferentialDrive(m_LeftMotors,m_RightMotors);
 
   //private XboxController m_Controller = new XboxController(0);
@@ -157,7 +163,7 @@ public class AutonomousLimelight extends Robot implements Subsystem  {
         // try to drive forward until the target area reaches our desired area
         double drive_cmd = (DESIRED_TARGET_AREA - ta) * DRIVE_K;
 
-        // don't let the robot drive too fast into the goal
+        // don't let the robot drive too fast
         if (drive_cmd > MAX_DRIVE)
         {
           drive_cmd = MAX_DRIVE;
