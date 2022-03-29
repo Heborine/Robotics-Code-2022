@@ -135,6 +135,10 @@ public class Robot extends TimedRobot {
                 //full stop
                 drivetrain.drivetrain.tankDrive(0, 0);
             }
+            //turn in place
+            else if(XboxController0.getLeftStickButtonPressed()){
+                drivetrain.drivetrain.tankDrive(y_left, -y_right);
+            }
             else{
                 //reverse controls
                 drivetrain.drivetrain.tankDrive(-y_left, -y_right);
