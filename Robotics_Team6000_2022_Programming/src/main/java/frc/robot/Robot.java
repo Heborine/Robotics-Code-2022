@@ -82,7 +82,7 @@ public class Robot extends TimedRobot {
                 double heading_error = -tx;
                 double distance_error = -ty;
                 double steering_adjust = 0.0f;
-        
+        // adjust tx values and maybe add in ty
                 if (tx > 1.0){
                     steering_adjust = KpAim*heading_error - min_aim_command;
                 }
@@ -100,6 +100,7 @@ public class Robot extends TimedRobot {
         System.out.println(left_command);
         System.out.println("right_command");
         System.out.println(right_command);
+
         drivetrain.drivetrain.tankDrive(-left_command, -right_command);
 
         if(left_command == 0 && right_command == 0){
