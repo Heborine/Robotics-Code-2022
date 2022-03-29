@@ -243,7 +243,22 @@ public class Robot extends TimedRobot {
         
         double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
         double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
-        
+    /*    
+        if (XboxController1.getAButtonPressed()) {
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").setNumber(<value>);
+
+
+            if (intakeActive){
+                intakeActive = false;
+                intake.intakeRoller.set(0); 
+            }  
+            else{
+                intakeActive = true;
+                intake.intakeRoller.set(RobotMap.intakeSpeed);
+            } 
+            if (verbose) System.out.println("A pressed");
+        }
+    */
         if (limelight_on){
                 double heading_error = -tx;
                 double distance_error = -ty;
