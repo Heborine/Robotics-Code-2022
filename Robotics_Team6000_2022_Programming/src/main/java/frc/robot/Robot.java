@@ -1,5 +1,5 @@
 //define control scheme -- arcade vs. tank
-
+// Control Scheme Document so far: https://docs.google.com/document/d/1rWMHrpDTBKcG1Q6-gbv4yI6xAS-BwlAHAO730PDODtk/edit
 
 package frc.robot;
 
@@ -8,16 +8,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 //import edu.wpi.first.wpilibj.GenericHID.Hand;
 //import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.cameraserver.*;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
+// import edu.wpi.first.cameraserver.*;
+// import edu.wpi.first.networktables.NetworkTable;
+// import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 import java.lang.System;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 import frc.robot.subsystems.DrivetrainMotors;

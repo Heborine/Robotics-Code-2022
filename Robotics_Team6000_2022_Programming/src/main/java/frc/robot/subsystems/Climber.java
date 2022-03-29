@@ -1,11 +1,13 @@
 package frc.robot.subsystems;
 
+//not used
+
 //import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.RobotMap;
 //import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Timer;
+//import edu.wpi.first.wpilibj.Timer;
 
 public class Climber implements Subsystem{
     public Spark climberMotor;
@@ -23,7 +25,7 @@ public class Climber implements Subsystem{
 
     // @Override
     // protected void initDefaultCommand() {
-    //     // TODO Auto-generated method stub
+    //     // todo Auto-generated method stub
         
     // }
 }
