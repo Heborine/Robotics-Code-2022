@@ -134,11 +134,11 @@ public class Robot extends TimedRobot {
         if(!arcadeDriveActive) {
             double getLeftY = XboxController0.getLeftY();
             double getRightY = XboxController0.getRightY();
+            System.out.println("Tank Drive");
             
             //simple acceleration curve
             double y_left = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
             double y_right = getRightY * Math.abs(getRightY) * RobotMap.drivetrainPower;
-            y_left *= 0.9;
             if(XboxController0.getBButtonPressed()){
                 //full stop
                 drivetrain.drivetrain.tankDrive(0, 0);
@@ -177,8 +177,10 @@ public class Robot extends TimedRobot {
 
         //set shooters to right back trigger
         // three motors for shooting: top, bottom, and magazine
-        shooter.topMotor.set(XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
+        shooter.topMotor.set(XboxController1.getRightTriggerAxis() * -RobotMap.shooterPower);
         shooter.bottomMotor.set(-XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
+        //shooter.topMotor.set(XboxController1.getLeftTriggerAxis() * RobotMap.shooterPower);
+        //shooter.bottomMotor.set(-XboxController1.getLeftTriggerAxis() * -RobotMap.shooterPower);
         
         //magazine
         
@@ -284,19 +286,19 @@ public class Robot extends TimedRobot {
                 left_command += steering_adjust + distance_adjust;
                 right_command -= steering_adjust + distance_adjust;
         }/**/
-        if(left_command == 0 && right_command == 0){
-            XboxController0.setRumble(RumbleType.kLeftRumble, RobotMap.vibratePower);
-            XboxController0.setRumble(RumbleType.kRightRumble, RobotMap.vibratePower);
-            XboxController1.setRumble(RumbleType.kLeftRumble, RobotMap.vibratePower);
-            XboxController1.setRumble(RumbleType.kRightRumble, RobotMap.vibratePower);
-            if (verbose) System.out.println("Rumble");
-        }/**/ 
-        else{
-            XboxController0.setRumble(RumbleType.kLeftRumble, 0);
-            XboxController0.setRumble(RumbleType.kRightRumble, 0);
-            XboxController1.setRumble(RumbleType.kLeftRumble, 0);
-            XboxController1.setRumble(RumbleType.kRightRumble, 0);
-            if (verbose) System.out.println("No rumble");
-        }
+        //if(left_command == 0 && right_command == 0){
+          //  XboxController0.setRumble(RumbleType.kLeftRumble, RobotMap.vibratePower);
+           // XboxController0.setRumble(RumbleType.kRightRumble, RobotMap.vibratePower);
+            //XboxController1.setRumble(RumbleType.kLeftRumble, RobotMap.vibratePower);
+            //XboxController1.setRumble(RumbleType.kRightRumble, RobotMap.vibratePower);
+            //if (verbose) System.out.println("Rumble");
+        //}/**/ 
+        //else{
+          //  XboxController0.setRumble(RumbleType.kLeftRumble, 0);
+            //XboxController0.setRumble(RumbleType.kRightRumble, 0);
+            //XboxController1.setRumble(RumbleType.kLeftRumble, 0);
+            //XboxController1.setRumble(RumbleType.kRightRumble, 0);
+            //if (verbose) System.out.println("No rumble");
+        //}
     }
 }
