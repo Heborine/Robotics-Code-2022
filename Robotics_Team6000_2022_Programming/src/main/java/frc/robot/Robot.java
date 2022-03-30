@@ -39,13 +39,12 @@ public class Robot extends TimedRobot {
 
     public static XboxController XboxController0;
     public static XboxController XboxController1;
-    public static boolean arcadeDriveActive = false;
-    public static boolean intakeActive = false;
+    // public static boolean arcadeDriveActive = false;
+    // public static boolean intakeActive = false;
     // public static boolean magazineActive = false;
     public static boolean limelight_on = true;
     public static boolean verbose = true; //change this for amount of output. its a lot of output
     
-    public static boolean shot = false;
 
     @Override
     public void robotInit() {
@@ -103,34 +102,36 @@ public class Robot extends TimedRobot {
     
             left_command += steering_adjust + distance_adjust;
             right_command -= steering_adjust + distance_adjust;
+
+            left_command *= -1;
+            right_command *= -1;
     }
         //maybe adjust here
-        System.out.println("left_command");
-        System.out.println(left_command);
-        System.out.println("right_command");
-        System.out.println(right_command);
+        System.out.println("left_command:");
+        System.out.println("             " + left_command);
+        System.out.println("right_command:");
+        System.out.println("              " + right_command);
 
-        drivetrain.drivetrain.tankDrive(-left_command, -right_command);
+        drivetrain.drivetrain.tankDrive(left_command, right_command);
 
-        if(shot){
-            drivetrain.drivetrain.tankDrive(-0.5, -0.5);
-            Timer.delay(2);
-            drivetrain.drivetrain.tankDrive(0, 0);
-            shot = false;
-        }
 
-        if(left_command == 0 && right_command == 0 && !shot){
+        if(left_command == 0 && right_command == 0){
             limelight_on = false;
             System.out.println("Firing");
             shooter.Firing();
             Timer.delay(3);
             shooter.StopFiring();
-            shot = true;
+            drivetrain.drivetrain.tankDrive(-0.5, -0.5);
+            Timer.delay(2);
+            drivetrain.drivetrain.tankDrive(0, 0);
         }
     }
 
     @Override
     public void teleopPeriodic() {
+        boolean arcadeDriveActive = false;
+        boolean intakeActive = false;    
+        // boolean magazineActive = false;
         /*
         delete asterisk on next line to comment out entire control scheme
         */
@@ -168,7 +169,6 @@ public class Robot extends TimedRobot {
                 drivetrain.drivetrain.tankDrive(y_right, -y_right);
             }
             else{
-                //reverse controls
                 drivetrain.drivetrain.tankDrive(-y_left, -y_right);
             }
         }
@@ -199,6 +199,7 @@ public class Robot extends TimedRobot {
         // three motors for shooting: top, bottom, and magazine
         double right_trigger = XboxController1.getRightTriggerAxis();
         double left_trigger = XboxController1.getLeftTriggerAxis();
+        //N likes the code below a LOT
         if(right_trigger > 0){
             shooter.topMotor.set(right_trigger * -RobotMap.shooterPower);
             shooter.bottomMotor.set(-right_trigger * RobotMap.shooterPower);
@@ -232,7 +233,7 @@ public class Robot extends TimedRobot {
             intake.intakeExtender.set(RobotMap.rollerExtendPower);
             if (verbose) System.out.println("Left Bumper pressed");
         }
-        if(!XboxController1.getRightBumper() && !XboxController1.getLeftBumper()){
+        if(!XboxController1.getRightBumper() && (!XboxController1.getLeftBumper())){
             intake.intakeExtender.set(0.0);
         }
         
