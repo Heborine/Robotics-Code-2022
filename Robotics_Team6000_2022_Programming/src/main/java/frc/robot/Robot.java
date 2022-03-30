@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 import java.lang.System;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.networktables.NetworkTable;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -43,7 +44,8 @@ public class Robot extends TimedRobot {
     // public static boolean magazineActive = false;
     public static boolean limelight_on = true;
     public static boolean verbose = true; //change this for amount of output. its a lot of output
-
+    
+    public static boolean shot = false;
 
     @Override
     public void robotInit() {
@@ -78,23 +80,30 @@ public class Robot extends TimedRobot {
         // System.out.println("Limelight Values:");
         // System.out.println(NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0));
         if (limelight_on){
-                System.out.println("Calibrating Limelight");
-                double heading_error = -tx;
-                double distance_error = -ty;
-                double steering_adjust = 0.0f;
-        // adjust tx values and maybe add in ty
-                if (tx > 1.0){
+            double heading_error = -tx;
+            double distance_error = -ty;
+            double steering_adjust = 0.0f;
+    
+            if (tx > 3.5){
+                steering_adjust = KpAim*heading_error - min_aim_command;
+            }
+            else if (tx < -3.5){
+                steering_adjust = KpAim*heading_error + min_aim_command;
+            }
+            else{
+                if(ty > 24){
                     steering_adjust = KpAim*heading_error - min_aim_command;
                 }
-                else if (tx < -1.0){
+                else if(ty < 19){
                     steering_adjust = KpAim*heading_error + min_aim_command;
                 }
-        
-                double distance_adjust = KpDistance * distance_error;
-        
-                left_command += steering_adjust + distance_adjust;
-                right_command -= steering_adjust + distance_adjust;
-        }
+            }
+    
+            double distance_adjust = KpDistance * distance_error;
+    
+            left_command += steering_adjust + distance_adjust;
+            right_command -= steering_adjust + distance_adjust;
+    }
         //maybe adjust here
         System.out.println("left_command");
         System.out.println(left_command);
@@ -103,12 +112,20 @@ public class Robot extends TimedRobot {
 
         drivetrain.drivetrain.tankDrive(-left_command, -right_command);
 
-        if(left_command == 0 && right_command == 0){
+        if(shot){
+            drivetrain.drivetrain.tankDrive(-0.5, -0.5);
+            Timer.delay(2);
+            drivetrain.drivetrain.tankDrive(0, 0);
+            shot = false;
+        }
+
+        if(left_command == 0 && right_command == 0 && !shot){
             limelight_on = false;
             System.out.println("Firing");
             shooter.Firing();
-            Timer.delay(1.5);
+            Timer.delay(3);
             shooter.StopFiring();
+            shot = true;
         }
     }
 
@@ -145,7 +162,10 @@ public class Robot extends TimedRobot {
             }
             //turn in place
             else if(XboxController0.getLeftStickButtonPressed()){
-                drivetrain.drivetrain.tankDrive(y_left, -y_right);
+                drivetrain.drivetrain.tankDrive(-y_left, y_left);
+            }
+            else if(XboxController0.getRightStickButtonPressed()){
+                drivetrain.drivetrain.tankDrive(y_right, -y_right);
             }
             else{
                 //reverse controls
@@ -177,25 +197,18 @@ public class Robot extends TimedRobot {
 
         //set shooters to right back trigger
         // three motors for shooting: top, bottom, and magazine
-        shooter.topMotor.set(XboxController1.getRightTriggerAxis() * -RobotMap.shooterPower);
-        shooter.bottomMotor.set(-XboxController1.getRightTriggerAxis() * RobotMap.shooterPower);
-        //shooter.topMotor.set(XboxController1.getLeftTriggerAxis() * RobotMap.shooterPower);
-        //shooter.bottomMotor.set(-XboxController1.getLeftTriggerAxis() * -RobotMap.shooterPower);
-        
-        //magazine
-        
-        // while(XboxController1.getYButton()) {
-        //     shooter.magazine.set(RobotMap.magazinePower);
-        //     if (verbose) System.out.println("Y pressed");
-        // }
-        // shooter.magazine.set(0);
-        // //reverse magazine
-        // while(XboxController1.getAButton()) {
-        //     shooter.magazine.set(RobotMap.reverseMagazinePower);
-        //     if (verbose) System.out.println("A pressed");
-        // }
-        // shooter.magazine.set(0);
+        double right_trigger = XboxController1.getRightTriggerAxis();
+        double left_trigger = XboxController1.getLeftTriggerAxis();
+        if(right_trigger > 0){
+            shooter.topMotor.set(right_trigger * -RobotMap.shooterPower);
+            shooter.bottomMotor.set(-right_trigger * RobotMap.shooterPower);
+        }
+        else{
+            shooter.topMotor.set(left_trigger * RobotMap.shooterPower);
+            shooter.bottomMotor.set(left_trigger * RobotMap.shooterPower);
+        }
 
+        //magazine
         if(XboxController1.getYButton()) {
             shooter.magazine.set(RobotMap.magazinePower);
             if (verbose) System.out.println("Y pressed");
@@ -253,52 +266,53 @@ public class Robot extends TimedRobot {
         
         double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
         double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
-    /*    
-        if (XboxController1.getAButtonPressed()) {
-            NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").setNumber(<value>);
+    
+        
+    //    if (XboxController1.getAButtonPressed()) {
+    //        NetworkTable limelighting = NetworkTableInstance.getDefault().getTable("limelight");
+    //        limelighting.ledMode("ledMode", 1);
+    //    }
 
 
-            if (intakeActive){
-                intakeActive = false;
-                intake.intakeRoller.set(0); 
-            }  
-            else{
-                intakeActive = true;
-                intake.intakeRoller.set(RobotMap.intakeSpeed);
-            } 
-            if (verbose) System.out.println("A pressed");
-        }
-    */
         if (limelight_on){
                 double heading_error = -tx;
                 double distance_error = -ty;
                 double steering_adjust = 0.0f;
         
-                if (tx > 1.0){
+                if (tx > 3.0){
                     steering_adjust = KpAim*heading_error - min_aim_command;
                 }
-                else if (tx < -1.0){
+                else if (tx < -3.0){
                     steering_adjust = KpAim*heading_error + min_aim_command;
+                }
+                else{
+                    if(ty > 24){
+                        steering_adjust = KpAim*heading_error - min_aim_command;
+                    }
+                    else if(ty < 19){
+                        steering_adjust = KpAim*heading_error + min_aim_command;
+                    }
                 }
         
                 double distance_adjust = KpDistance * distance_error;
         
                 left_command += steering_adjust + distance_adjust;
                 right_command -= steering_adjust + distance_adjust;
-        }/**/
-        //if(left_command == 0 && right_command == 0){
-          //  XboxController0.setRumble(RumbleType.kLeftRumble, RobotMap.vibratePower);
-           // XboxController0.setRumble(RumbleType.kRightRumble, RobotMap.vibratePower);
-            //XboxController1.setRumble(RumbleType.kLeftRumble, RobotMap.vibratePower);
-            //XboxController1.setRumble(RumbleType.kRightRumble, RobotMap.vibratePower);
-            //if (verbose) System.out.println("Rumble");
-        //}/**/ 
-        //else{
-          //  XboxController0.setRumble(RumbleType.kLeftRumble, 0);
-            //XboxController0.setRumble(RumbleType.kRightRumble, 0);
-            //XboxController1.setRumble(RumbleType.kLeftRumble, 0);
-            //XboxController1.setRumble(RumbleType.kRightRumble, 0);
-            //if (verbose) System.out.println("No rumble");
-        //}
+        }
+        
+        if(left_command == 0 && right_command == 0){
+           XboxController0.setRumble(RumbleType.kLeftRumble, RobotMap.vibratePower);
+           XboxController0.setRumble(RumbleType.kRightRumble, RobotMap.vibratePower);
+            XboxController1.setRumble(RumbleType.kLeftRumble, RobotMap.vibratePower);
+            XboxController1.setRumble(RumbleType.kRightRumble, RobotMap.vibratePower);
+            if (verbose) System.out.println("Rumble");
+        } 
+        else{
+           XboxController0.setRumble(RumbleType.kLeftRumble, 0);
+            XboxController0.setRumble(RumbleType.kRightRumble, 0);
+            XboxController1.setRumble(RumbleType.kLeftRumble, 0);
+            XboxController1.setRumble(RumbleType.kRightRumble, 0);
+            if (verbose) System.out.println("No rumble");
+        }
     }
 }
