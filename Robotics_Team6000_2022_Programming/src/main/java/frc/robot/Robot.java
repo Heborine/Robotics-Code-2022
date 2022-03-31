@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     public static XboxController XboxController0;
     public static XboxController XboxController1;
     // public static boolean arcadeDriveActive = false;
-    // public static boolean intakeActive = false;
+    public static boolean intakeActive = false;
     // public static boolean magazineActive = false;
     public static boolean limelight_on = true;
     public static boolean verbose = true; //change this for amount of output. its a lot of output
@@ -130,7 +130,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         boolean arcadeDriveActive = false;
-        boolean intakeActive = false;    
+        // boolean intakeActive = false;    
         // boolean magazineActive = false;
         /*
         delete asterisk on next line to comment out entire control scheme
@@ -201,7 +201,7 @@ public class Robot extends TimedRobot {
         double left_trigger = XboxController1.getLeftTriggerAxis();
         //N likes the code below a LOT
         if(right_trigger > 0){
-            shooter.topMotor.set(right_trigger * -RobotMap.shooterPower);
+            shooter.topMotor.set(right_trigger * 0.65 * -RobotMap.shooterPower);
             shooter.bottomMotor.set(-right_trigger * RobotMap.shooterPower);
         }
         else{
@@ -236,7 +236,8 @@ public class Robot extends TimedRobot {
         if(!XboxController1.getRightBumper() && (!XboxController1.getLeftBumper())){
             intake.intakeExtender.set(0.0);
         }
-        
+        System.out.println("Intake Active:");
+        System.out.println(intakeActive);
         //toggle intake
         if (XboxController1.getXButtonPressed()) {
             if (intakeActive){
@@ -247,7 +248,7 @@ public class Robot extends TimedRobot {
                 intakeActive = true;
                 intake.intakeRoller.set(RobotMap.intakeSpeed);
             } 
-            if (verbose) System.out.println("X pressed");
+            // if (verbose) System.out.println("X pressed");
         }
 
         // if(XboxController1.getAButtonPressed()){
