@@ -228,7 +228,7 @@ public class Robot extends TimedRobot {
         double left_trigger = XboxController1.getLeftTriggerAxis();
         //N likes the code below a LOT
         if(right_trigger > 0){
-            shooter.topMotor.set(right_trigger * 0.65 * -RobotMap.shooterPower);
+            shooter.topMotor.set(right_trigger * RobotMap.topShooterPower * -RobotMap.shooterPower);
             shooter.bottomMotor.set(-right_trigger * RobotMap.shooterPower);
         }
         else{
