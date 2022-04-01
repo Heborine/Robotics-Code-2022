@@ -35,9 +35,8 @@ public class Shooter extends Robot implements Subsystem {
   public void Firing(){
     //needs trigger power
     System.out.println("Firing");
-    shooter.topMotor.set(RobotMap.shooterPower2);
-    shooter.bottomMotor.set(-RobotMap.shooterPower2);
-    Timer.delay(1);
+    shooter.topMotor.set(RobotMap.autonomousShootPower);
+    shooter.bottomMotor.set(-RobotMap.autonomousShootPower);
     shooter.magazine.set(RobotMap.magazinePower);
     Timer.delay(1);
   }

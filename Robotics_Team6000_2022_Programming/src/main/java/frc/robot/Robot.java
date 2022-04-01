@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic() {
         if(taxi){
             taxi = false;
-            drivetrain.drivetrain.tankDrive(-RobotMap.AutonomousDrivePower, -RobotMap.AutonomousDrivePower);
+            drivetrain.drivetrain.tankDrive(-RobotMap.autonomousDrivePower, -RobotMap.autonomousDrivePower);
             Timer.delay(1.25);
             drivetrain.drivetrain.tankDrive(0, 0);
             shooter.Firing();
@@ -162,7 +162,6 @@ public class Robot extends TimedRobot {
         if(!arcadeDriveActive) {
             double getLeftY = XboxController0.getLeftY();
             double getRightY = XboxController0.getRightY();
-            System.out.println("Tank Drive");
             
             //simple acceleration curve
             double y_left = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
@@ -249,7 +248,7 @@ public class Robot extends TimedRobot {
         }
         else{
             shooter.magazine.set(0);
-            if (verbose) System.out.println("A and Y not pressed");
+            // if (verbose) System.out.println("A and Y not pressed");
         }
 
         //intake extension/retraction
@@ -264,18 +263,19 @@ public class Robot extends TimedRobot {
         if(!XboxController1.getRightBumper() && (!XboxController1.getLeftBumper())){
             intake.intakeExtender.set(0.0);
         }
-        System.out.println("Intake Active: " + intakeActive);
         //toggle intake
         if (XboxController1.getXButtonPressed()) {
+            if (verbose) System.out.println("X pressed");
             if (intakeActive){
                 intakeActive = false;
-                intake.intakeRoller.set(0); 
-            }  
+                intake.intakeRoller.set(0);
+                if (verbose) System.out.println("Intake inactive");
+            }
             else{
                 intakeActive = true;
                 intake.intakeRoller.set(RobotMap.intakeSpeed);
+                if (verbose) System.out.println("Intake active");
             } 
-            // if (verbose) System.out.println("X pressed");
         }
 
         // if(XboxController1.getAButtonPressed()){
