@@ -19,7 +19,8 @@ public class RobotMap {
   // Drivetrain
   public static int leftDrivetrain = 0;
   public static int rightDrivetrain = 1; //final
-  public static double drivetrainPower = 0.9; //slow down 
+  public static double drivetrainPower = 0.98; //slow down 
+  public static double AutonomousDrivePower = 0.875;
 
   // public static int leftDrivetrainEncoderA = 0;
   // public static int leftDrivetrainEncoderB = 1;
@@ -37,7 +38,8 @@ public class RobotMap {
   // Shooter
   public static int topShooter = 6;
   public static int bottomShooter = 2;
-  public static double shooterPower = 0.8;
+  public static double shooterPower = 0.9;
+  public static double shooterPower2 = 0.9;
 
   // Magazine
   public static int magazine = 5;
