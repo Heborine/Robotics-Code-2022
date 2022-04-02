@@ -26,6 +26,7 @@ import frc.robot.subsystems.DrivetrainMotors;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
+// import frc.robot.RobotMap.*;
 
 
 public class Robot extends TimedRobot {
@@ -207,7 +208,7 @@ public class Robot extends TimedRobot {
             //turn differently (not moving forward or backward) when left stick pressed
             else if(XboxController0.getLeftStickButtonPressed()){
                 drivetrain.drivetrain.arcadeDrive(speed, 0);
-            } 
+            }
             else {
                 drivetrain.drivetrain.arcadeDrive(speed, rotation);
             }
@@ -223,7 +224,7 @@ public class Robot extends TimedRobot {
         }
 
         //set shooters to right back trigger
-        // three motors for shooting: top, bottom, and magazine
+        //two motors for shooting - top and bottom
         double right_trigger = XboxController1.getRightTriggerAxis();
         double left_trigger = XboxController1.getLeftTriggerAxis();
         //N likes the code below a LOT

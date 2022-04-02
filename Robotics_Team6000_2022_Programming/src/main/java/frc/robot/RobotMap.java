@@ -6,9 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 
-/* 0.7 */
-
-
 
 //various variables:
 //spark inputs, misc
@@ -67,7 +64,7 @@ public class RobotMap {
 
   // Miscellany
   //public static boolean collectMode = false;
-  public static double vibratePower = 2;
+  // public static double vibratePower = 2;
 
   // For Testing
   //public static boolean activateSensor = true;
