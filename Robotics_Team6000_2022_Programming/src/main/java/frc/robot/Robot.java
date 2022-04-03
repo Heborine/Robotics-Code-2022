@@ -62,15 +62,26 @@ public class Robot extends TimedRobot {
     }
 
     @Override
+    public void autonomousInit() {
+        taxi = true;
+    }
+
+    @Override
     public void autonomousPeriodic() {
         if(taxi){
             taxi = false;
+            intake.intakeExtender.set(-RobotMap.rollerExtendPower);
+            Timer.delay(1.5);
+            intake.intakeExtender.set(0);
             drivetrain.drivetrain.tankDrive(-RobotMap.autonomousDrivePower, -RobotMap.autonomousDrivePower);
-            Timer.delay(1.25);
+            Timer.delay(0.75);
             drivetrain.drivetrain.tankDrive(0, 0);
             shooter.Firing();
             Timer.delay(3);
             shooter.StopFiring();
+            drivetrain.drivetrain.tankDrive(-RobotMap.autonomousDrivePower, -RobotMap.autonomousDrivePower);
+            Timer.delay(0.5);
+            drivetrain.drivetrain.tankDrive(0, 0);
         }
     }
         //limelight.autoPeriodic();
@@ -167,6 +178,7 @@ public class Robot extends TimedRobot {
             //simple acceleration curve
             double y_left = getLeftY * Math.abs(getLeftY) * RobotMap.drivetrainPower;
             double y_right = getRightY * Math.abs(getRightY) * RobotMap.drivetrainPower;
+
             if(XboxController0.getBButtonPressed()){
                 //full stop
                 drivetrain.drivetrain.tankDrive(0, 0);
@@ -179,7 +191,7 @@ public class Robot extends TimedRobot {
                 drivetrain.drivetrain.tankDrive(y_right, -y_right);
             }
             else{
-                drivetrain.drivetrain.tankDrive(-y_left, -y_right);
+                drivetrain.drivetrain.tankDrive(y_left, -y_right);
             }
 
             //super speed
@@ -278,6 +290,7 @@ public class Robot extends TimedRobot {
                 if (verbose) System.out.println("Intake active");
             } 
         }
+
 
         // if(XboxController1.getAButtonPressed()){
         //     climber.raiseClimber();
