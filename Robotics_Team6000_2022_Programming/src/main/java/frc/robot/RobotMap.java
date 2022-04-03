@@ -16,8 +16,8 @@ public class RobotMap {
   // Drivetrain
   public static int leftDrivetrain = 0;
   public static int rightDrivetrain = 1;
-  public static double drivetrainPower = -0.98;
-  public static double autonomousDrivePower = -0.875;
+  public static double drivetrainPower = 0.98;
+  public static double autonomousDrivePower = 0.875;
 
   // public static int leftDrivetrainEncoderA = 0;
   // public static int leftDrivetrainEncoderB = 1;

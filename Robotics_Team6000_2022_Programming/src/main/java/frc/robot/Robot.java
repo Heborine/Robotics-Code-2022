@@ -70,84 +70,24 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic() {
         if(taxi){
             taxi = false;
-            intake.intakeExtender.set(-RobotMap.rollerExtendPower);
-            Timer.delay(1.5);
-            intake.intakeExtender.set(0);
-            drivetrain.drivetrain.tankDrive(-RobotMap.autonomousDrivePower, -RobotMap.autonomousDrivePower);
-            Timer.delay(0.75);
+
+            drivetrain.drivetrain.tankDrive(-RobotMap.autonomousDrivePower, RobotMap.autonomousDrivePower);
+            Timer.delay(2);
             drivetrain.drivetrain.tankDrive(0, 0);
-            shooter.Firing();
-            Timer.delay(3);
-            shooter.StopFiring();
-            drivetrain.drivetrain.tankDrive(-RobotMap.autonomousDrivePower, -RobotMap.autonomousDrivePower);
-            Timer.delay(0.5);
-            drivetrain.drivetrain.tankDrive(0, 0);
+            
+            // intake.intakeExtender.set(RobotMap.rollerExtendPower);
+            // Timer.delay(1.5);
+            // intake.intakeExtender.set(0);
+            
+            // shooter.Firing();
+            // Timer.delay(3);
+            // shooter.StopFiring();
+            
+            // drivetrain.drivetrain.tankDrive(-RobotMap.autonomousDrivePower, RobotMap.autonomousDrivePower);
+            // Timer.delay(0.5);
+            // drivetrain.drivetrain.tankDrive(0, 0);
         }
     }
-        //limelight.autoPeriodic();
-        //drivetrain.driveRoute();
-        //shooter.Firing();
-        //Timer.delay(5);
-        //shooter.StopFiring();
-    //     float KpAim = -0.1f;
-    //     float KpDistance = -0.1f;
-    //     float min_aim_command = 0.05f;
-
-    //     double left_command = 0;
-    //     double right_command = 0;
-        
-    //     double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
-    //     double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
-    //     // System.out.println("Limelight Values:");
-    //     // System.out.println(NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0));
-    //     if (limelight_on){
-    //         double heading_error = -tx;
-    //         double distance_error = -ty;
-    //         double steering_adjust = 0.0f;
-    
-    //         if (tx > /*3.5*/ 1){
-    //             steering_adjust = KpAim*heading_error - min_aim_command;
-    //         }
-    //         else if (tx < /*-3.5*/ -1){
-    //             steering_adjust = KpAim*heading_error + min_aim_command;
-    //         }
-    //         /*else{
-    //             if(ty > 24){
-    //                 steering_adjust = KpAim*heading_error - min_aim_command;
-    //             }
-    //             else if(ty < 19){
-    //                 steering_adjust = KpAim*heading_error + min_aim_command;
-    //             }
-    //         }*/
-    
-    //         double distance_adjust = KpDistance * distance_error;
-    
-    //         left_command += steering_adjust + distance_adjust;
-    //         right_command -= steering_adjust + distance_adjust;
-
-    //         left_command *= -1;
-    //         right_command *= -1;
-    // }
-    //     //maybe adjust here
-    //     System.out.println("left_command:");
-    //     System.out.println(left_command);
-    //     System.out.println("right_command:");
-    //     System.out.println(right_command);
-
-    //     drivetrain.drivetrain.tankDrive(left_command, right_command);
-
-
-    //     if(left_command == 0 && right_command == 0){
-    //         limelight_on = false;
-    //         System.out.println("Firing");
-    //         shooter.Firing();
-    //         Timer.delay(3);
-    //         shooter.StopFiring();
-    //         // drivetrain.drivetrain.tankDrive(-0.5, -0.5);
-    //         // Timer.delay(2);
-    //         // drivetrain.drivetrain.tankDrive(0, 0);
-    //     }
-    // }
 
     @Override
     public void teleopPeriodic() {
@@ -168,7 +108,6 @@ public class Robot extends TimedRobot {
                 System.out.println("Arcade drive");
             }
         }
-        // if there is a valid target by the limelight maybe input something here to have the controller react
 
         //tank drive
         if(!arcadeDriveActive) {
@@ -240,7 +179,7 @@ public class Robot extends TimedRobot {
         double right_trigger = XboxController1.getRightTriggerAxis();
         double left_trigger = XboxController1.getLeftTriggerAxis();
         //N likes the code below a LOT
-        if(right_trigger > 0){
+        if(right_trigger != 0){
             shooter.topMotor.set(right_trigger * RobotMap.topShooterPower * -RobotMap.shooterPower);
             shooter.bottomMotor.set(-right_trigger * RobotMap.shooterPower);
         }
@@ -266,11 +205,11 @@ public class Robot extends TimedRobot {
 
         //intake extension/retraction
         if(XboxController1.getRightBumper()){
-            intake.intakeExtender.set(-RobotMap.rollerExtendPower);
+            intake.intakeExtender.set(RobotMap.rollerExtendPower);
             if (verbose) System.out.println("Right Bumper pressed");
         }
         if(XboxController1.getLeftBumper()){
-            intake.intakeExtender.set(RobotMap.rollerExtendPower);
+            intake.intakeExtender.set(-RobotMap.rollerExtendPower);
             if (verbose) System.out.println("Left Bumper pressed");
         }
         if(!XboxController1.getRightBumper() && (!XboxController1.getLeftBumper())){

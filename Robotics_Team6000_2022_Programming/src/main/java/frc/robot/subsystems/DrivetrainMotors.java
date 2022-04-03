@@ -22,8 +22,8 @@ public class DrivetrainMotors implements Subsystem{
         drivetrain = new DifferentialDrive(leftMotor, rightMotor);
         
         //set to true if the motor polarity needs to be flipped
-        leftMotor.setInverted(false);
-        rightMotor.setInverted(true);
+        leftMotor.setInverted(true);
+        rightMotor.setInverted(false);
 
         // leftEncoder = new Encoder(RobotMap.leftDrivetrainEncoderA, RobotMap.leftDrivetrainEncoderB, RobotMap.leftDrivetrainEncoder_Reverse, Encoder.EncodingType.k2X);
         // rightEncoder = new Encoder(RobotMap.rightDrivetrainEncoderA, RobotMap.rightDrivetrainEncoderB, RobotMap.rightDrivetrainEncoder_Reverse, Encoder.EncodingType.k2X);
