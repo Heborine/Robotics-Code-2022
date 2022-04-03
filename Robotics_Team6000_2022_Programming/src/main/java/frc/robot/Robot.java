@@ -71,7 +71,7 @@ public class Robot extends TimedRobot {
         if(taxi){
             taxi = false;
 
-            drivetrain.drivetrain.tankDrive(-RobotMap.autonomousDrivePower, RobotMap.autonomousDrivePower);
+            drivetrain.drivetrain.tankDrive(RobotMap.autonomousDrivePower, -RobotMap.autonomousDrivePower);
             Timer.delay(2);
             drivetrain.drivetrain.tankDrive(0, 0);
             
@@ -123,12 +123,12 @@ public class Robot extends TimedRobot {
                 drivetrain.drivetrain.tankDrive(0, 0);
             }
             //turn in place
-            else if(XboxController0.getLeftStickButtonPressed()){
-                drivetrain.drivetrain.tankDrive(-y_left, y_left);
-            }
-            else if(XboxController0.getRightStickButtonPressed()){
-                drivetrain.drivetrain.tankDrive(y_right, -y_right);
-            }
+            // else if(XboxController0.getLeftStickButton()){
+            //     drivetrain.drivetrain.tankDrive(-y_left, y_left);
+            // }
+            // else if(XboxController0.getRightStickButton()){
+            //     drivetrain.drivetrain.tankDrive(y_right, -y_right);
+            // }
             else{
                 drivetrain.drivetrain.tankDrive(y_left, -y_right);
             }
@@ -225,7 +225,7 @@ public class Robot extends TimedRobot {
             }
             else{
                 intakeActive = true;
-                intake.intakeRoller.set(RobotMap.intakeSpeed);
+                intake.intakeRoller.set(RobotMap.intakePower);
                 if (verbose) System.out.println("Intake active");
             } 
         }

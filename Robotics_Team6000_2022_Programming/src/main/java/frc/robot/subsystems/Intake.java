@@ -27,7 +27,7 @@ public class Intake implements Subsystem {
     }
 
     public void extendIntake() {
-        intakeExtender.set(RobotMap.intakeSpeed);
+        intakeExtender.set(RobotMap.intakePower);
         Timer.delay(3);
         intakeExtender.set(0.0);
     }
